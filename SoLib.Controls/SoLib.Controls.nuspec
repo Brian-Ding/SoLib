@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SoLib.Controls</id>
+    <version>1.0.3</version>
+    <title>SoLib.Controls</title>
+    <authors>Brian Ding</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A uwp control library.</description>
+    <releaseNotes>First release.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>uwp</tags>
+  </metadata>
+  <files>
+    <file src="..\SoLib.Controls\bin\Release\" target="lib\uap10.0" />
+  </files>
+</package>
