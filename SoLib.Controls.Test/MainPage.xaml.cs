@@ -22,9 +22,16 @@ namespace SoLib.Controls.Test
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        Random random;
         public MainPage()
         {
             this.InitializeComponent();
+            random = new Random();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            rec.Value = random.Next(250);
         }
     }
 }

@@ -2,10 +2,11 @@
 <package >
   <metadata>
     <id>SoLib.Controls</id>
-    <version>1.0.3</version>
+    <version>1.0.8</version>
     <title>SoLib.Controls</title>
     <authors>Brian Ding</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/Brian-Ding/SoLib</projectUrl>
     <description>A uwp control library.</description>
     <releaseNotes>First release.</releaseNotes>
     <copyright>Copyright 2017</copyright>

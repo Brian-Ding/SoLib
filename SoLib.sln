@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26020.0
+VisualStudioVersion = 15.0.26014.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoLib.Controls", "SoLib.Controls\SoLib.Controls.csproj", "{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}"
 EndProject
@@ -26,6 +26,7 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}.Debug|ARM.ActiveCfg = Debug|ARM
 		{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}.Debug|ARM.Build.0 = Debug|ARM
 		{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}.Debug|x64.ActiveCfg = Debug|x64
@@ -40,7 +41,9 @@ Global
 		{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}.Release|x64.Build.0 = Release|x64
 		{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}.Release|x86.ActiveCfg = Release|x86
 		{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}.Release|x86.Build.0 = Release|x86
-		{60E44B07-4100-4D3E-9F7C-746187DD3362}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{60E44B07-4100-4D3E-9F7C-746187DD3362}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{60E44B07-4100-4D3E-9F7C-746187DD3362}.Debug|Any CPU.Build.0 = Debug|x64
+		{60E44B07-4100-4D3E-9F7C-746187DD3362}.Debug|Any CPU.Deploy.0 = Debug|x64
 		{60E44B07-4100-4D3E-9F7C-746187DD3362}.Debug|ARM.ActiveCfg = Debug|ARM
 		{60E44B07-4100-4D3E-9F7C-746187DD3362}.Debug|ARM.Build.0 = Debug|ARM
 		{60E44B07-4100-4D3E-9F7C-746187DD3362}.Debug|ARM.Deploy.0 = Debug|ARM

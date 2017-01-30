@@ -1,5 +1,9 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using System.Numerics;
+using Windows.UI.Composition;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -8,9 +12,12 @@ namespace SoLib.Controls
 {
     public sealed partial class ValueRec : UserControl
     {
+        private readonly Compositor _compositor;
+
         public ValueRec()
         {
             this.InitializeComponent();
+            _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
         }
 
 
@@ -30,12 +37,19 @@ namespace SoLib.Controls
         public double Value
         {
             get { return (double)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            set
+            {
+                if (Value != value)
+                {
+                    StartAnimation(value);
+                }
+                SetValue(ValueProperty, value);
+            }
         }
 
         // Using a DependencyProperty as the backing store for Value.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(double), typeof(ValueRec), new PropertyMetadata(100.0));
+            DependencyProperty.Register("Value", typeof(double), typeof(ValueRec), new PropertyMetadata(0.0));
 
 
 
@@ -64,20 +78,37 @@ namespace SoLib.Controls
 
 
 
-
-        public double WidthRatio
+        private void StartAnimation(double value)
         {
-            get { return (double)GetValue(WidthRatioProperty); }
-            set { SetValue(WidthRatioProperty, value); }
+            float ratio = (float)this.Value / (float)value;
+            Visual recVisual = ElementCompositionPreview.GetElementVisual(rec);
+            Visual txtVisual = ElementCompositionPreview.GetElementVisual(txt);
+            recVisual.CenterPoint = new Vector3(0, 0.5f, 0);
+            recVisual.Scale = new Vector3(ratio, 1, 0);
+            txtVisual.Opacity = 0;
+
+            CompositionEasingFunction cubicBezierEasingFunction = _compositor.CreateCubicBezierEasingFunction(new Vector2(0.5f, 0f), new Vector2(0.3f, 0.9f));
+            Vector3KeyFrameAnimation scaleAnimation = _compositor.CreateVector3KeyFrameAnimation();
+            scaleAnimation.InsertKeyFrame(1f, new Vector3(1, 1, 0), cubicBezierEasingFunction);
+            scaleAnimation.Duration = TimeSpan.FromMilliseconds(1250);
+            scaleAnimation.DelayTime = TimeSpan.FromMilliseconds(100);
+
+            ScalarKeyFrameAnimation offsetAnimation = _compositor.CreateScalarKeyFrameAnimation();
+            //offsetAnimation.InsertKeyFrame(0f, 10);
+            offsetAnimation.InsertKeyFrame(1f, (float)(10 + value), cubicBezierEasingFunction);
+            offsetAnimation.Duration = TimeSpan.FromMilliseconds(1250);
+            offsetAnimation.DelayTime = TimeSpan.FromMilliseconds(100);
+
+            ScalarKeyFrameAnimation opacityAnimation = _compositor.CreateScalarKeyFrameAnimation();
+            //opacityAnimation.InsertKeyFrame(0.2f, 0, cubicBezierEasingFunction);
+            opacityAnimation.InsertKeyFrame(1f, 1, cubicBezierEasingFunction);
+            opacityAnimation.Duration = TimeSpan.FromMilliseconds(1250);
+            opacityAnimation.DelayTime = TimeSpan.FromMilliseconds(100);
+
+            recVisual.StartAnimation(nameof(recVisual.Scale), scaleAnimation);
+            txtVisual.StartAnimation("Offset.X", offsetAnimation);
+            txtVisual.StartAnimation(nameof(txtVisual.Opacity), opacityAnimation);
         }
 
-        // Using a DependencyProperty as the backing store for WidthRatio.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty WidthRatioProperty =
-            DependencyProperty.Register("WidthRatio", typeof(double), typeof(ValueRec), new PropertyMetadata(1.0));
-
-        private double GetWidth()
-        {
-            return WidthRatio * Value;
-        }
     }
 }

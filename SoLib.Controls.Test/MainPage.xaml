@@ -9,10 +9,15 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <c:ValueRec Fill="Red">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <c:ValueRec Name="rec" Fill="Red" Value="95">
             <c:ValueRec.Header>
-                <Button Content="click122" />
+                <TextBlock Text="Data" />
             </c:ValueRec.Header>
         </c:ValueRec>
+        <Button Grid.Row="1" Content="ChangeValue" Click="Button_Click" />
     </Grid>
 </Page>

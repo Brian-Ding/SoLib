@@ -10,10 +10,14 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" MinWidth="30" />
+            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ContentControl Content="{x:Bind Path=Header}" VerticalAlignment="Center" />
-        <Rectangle Grid.Column="1" Height="{x:Bind Path=RecHeight}" Width="{x:Bind Path=GetWidth()}" Fill="{x:Bind Path=Fill}" />
+        <ContentControl Content="{x:Bind Path=Header}" VerticalAlignment="Center"/>
+        <Rectangle Name="rec" Grid.Column="2" Height="{x:Bind Path=RecHeight}" Width="{x:Bind Path=Value, Mode=OneWay}" Fill="{x:Bind Path=Fill}" HorizontalAlignment="Left" />
+        <Grid Grid.Column="2" VerticalAlignment="Center">
+            <TextBlock Name="txt" Text="{x:Bind Path=Value, Mode=OneWay}" FontWeight="Bold" Foreground="{x:Bind Path=Fill}" />
+        </Grid>
     </Grid>
 </UserControl>
