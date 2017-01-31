@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>SoLib.Controls</id>
-    <version>1.0.8</version>
-    <title>SoLib.Controls</title>
+    <id>SoLib.CognitiveService</id>
+    <version>1.0.0</version>
+    <title>SoLib.CognitiveService</title>
     <authors>Brian Ding</authors>
     <projectUrl>https://github.com/Brian-Ding/SoLib</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A uwp control library.</description>
+    <description>A Microsoft Cognitive Service library.</description>
     <releaseNotes>First release.</releaseNotes>
     <copyright>Copyright 2017</copyright>
-    <tags>uwp</tags>
+    <tags>cognitive, core, dotnet</tags>
   </metadata>
   <files>
-    <file src="..\SoLib.Controls\bin\Release\" target="lib\uap10.0" />
+    <file src="..\SoLib.Controls\bin\Release\" target="lib\netstandard1.6" />
   </files>
 </package>
