@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SoLib.CognitiveService.Common;
+using System;
 using System.Collections.Generic;
 
 namespace SoLib.CognitiveService.ComputerVision
 {
-    public class AnalyzeImageResult
+    public class AnalyzeImageResult : IResult
     {
         public List<Category> Categories { get; set; }
         public Adult Adult { get; set; }
@@ -112,29 +113,12 @@ namespace SoLib.CognitiveService.ComputerVision
         LineDrawing = 1
     }
 
-    public class ErrorResult
+    public class ErrorResult : IResult
     {
         public string Code { get; set; }
 
         public Guid RequestID { get; set; }
 
         public string Message { get; set; }
-    }
-
-    public enum VisualFeature
-    {
-        Categories,
-        Tags,
-        Description,
-        Faces,
-        ImageType,
-        Color,
-        Adult
-    }
-
-    public enum Language
-    {
-        en,
-        zh
     }
 }
