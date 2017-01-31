@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SoLib.CognitiveService</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>SoLib.CognitiveService</title>
     <authors>Brian Ding</authors>
     <projectUrl>https://github.com/Brian-Ding/SoLib</projectUrl>
@@ -13,6 +13,6 @@
     <tags>cognitive, core, dotnet</tags>
   </metadata>
   <files>
-    <file src="..\SoLib.Controls\bin\Release\" target="lib\netstandard1.6" />
+    <file src="..\SoLib.CognitiveService\bin\Release\" target="lib\netstandard1.6" />
   </files>
 </package>

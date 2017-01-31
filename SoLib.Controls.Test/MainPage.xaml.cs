@@ -31,7 +31,7 @@ namespace SoLib.Controls.Test
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            rec.Value = random.Next(250);
+            //rec.Value = random.Next(250);
         }
     }
 }
