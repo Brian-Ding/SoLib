@@ -43,21 +43,4 @@ namespace SoLib.CognitiveService.Common
             return result;
         }
     }
-
-    public enum VisualFeature
-    {
-        Categories,
-        Tags,
-        Description,
-        Faces,
-        ImageType,
-        Color,
-        Adult
-    }
-
-    public enum Language
-    {
-        en,
-        zh
-    }
 }
