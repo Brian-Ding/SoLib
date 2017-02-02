@@ -112,13 +112,4 @@ namespace SoLib.CognitiveService.ComputerVision
         NonLineDrawing = 0,
         LineDrawing = 1
     }
-
-    public class ErrorResult : IResult
-    {
-        public string Code { get; set; }
-
-        public Guid RequestID { get; set; }
-
-        public string Message { get; set; }
-    }
 }
