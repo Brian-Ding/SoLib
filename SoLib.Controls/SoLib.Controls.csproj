@@ -118,12 +118,20 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeMap.xaml.cs">
+      <DependentUpon>TreeMap.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValueRec.xaml.cs">
       <DependentUpon>ValueRec.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="TreeMap.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ValueRec.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
