@@ -33,10 +33,10 @@ namespace SoLib.Controls
         /// </summary>
         double Left { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        List<Guid> ChildrenIDs { get; set; }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //List<Guid> ChildrenIDs { get; set; }
 
         /// <summary>
         /// 

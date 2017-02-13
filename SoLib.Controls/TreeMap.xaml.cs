@@ -7,6 +7,9 @@ using Windows.UI.Xaml.Controls;
 
 namespace SoLib.Controls
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed partial class TreeMap : UserControl
     {
         /// <summary>
@@ -17,6 +20,10 @@ namespace SoLib.Controls
             this.InitializeComponent();
         }
 
+        private readonly double unitWidth = 50;
+        private readonly double unitHeight = 50;
+        private readonly double gapWidth = 20;
+        private readonly double gapHeight = 30;
 
         /// <summary>
         /// 
@@ -39,6 +46,13 @@ namespace SoLib.Controls
                 Width = treeMap.FindWidth(treeMap.FindTopData()),
                 Height = treeMap.FindHeight()
             };
+            treeMap.PlaceData();
+            foreach (var data in treeMap.DataSource)
+            {
+                treeMap.DrawData(data, canvas);
+            }
+
+            treeMap.Content = canvas;
         }
 
         private double FindWidth(IData data)
@@ -81,7 +95,7 @@ namespace SoLib.Controls
         {
             foreach (var child in DataSource)
             {
-                if (data.ChildrenIDs.Contains(child.ID))
+                if (child.ParentID == data.ID)
                 {
                     child.Level = data.Level + 1;
                     LevelData(child);
@@ -104,19 +118,58 @@ namespace SoLib.Controls
             return null;
         }
 
-        private void PlaceData(IData data)
+        private void PlaceData()
         {
-            if (data.Level == 0)
+            for (int i = 0; i < FindMaxLevel() + 1; i++)
             {
-                data.Top = 0;
+                List<IData> dataList = FindData(i);
+
+                for (int j = 0; j < dataList.Count; j++)
+                {
+                    if (i == 0)
+                    {
+                        dataList[j].Top = 0;
+                    }
+                    else
+                    {
+                        dataList[j].Top = i * 50 + (i - 1) * 30;
+                    }
+                    dataList[j].Left = (FindWidth(FindTopData()) - dataList.Count * unitWidth) / (dataList.Count + 1) * (j + 1) + unitWidth * j;
+                }
             }
-            else
+        }
+
+        private void DrawData(IData data, Canvas canvas)
+        {
+            TextBlock textBlock = new TextBlock()
             {
-                data.Top = data.Level * 50 + (data.Level - 1) * 30;
+                Text = data.ID.ToString(),
+                MaxWidth = 30
+            };
+
+            Canvas.SetTop(textBlock, data.Top);
+            Canvas.SetLeft(textBlock, data.Left);
+            canvas.Children.Add(textBlock);
+        }
+
+        private int FindMaxLevel()
+        {
+            int maxLevel = 0;
+
+            foreach (var data in DataSource)
+            {
+                if (data.Level > maxLevel)
+                {
+                    maxLevel = data.Level;
+                }
             }
 
-            double left = 0;
+            return maxLevel;
+        }
 
+        private List<IData> FindData(int level)
+        {
+            return DataSource.FindAll(d => d.Level == level);
         }
     }
 }
