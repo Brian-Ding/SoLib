@@ -34,26 +34,27 @@ namespace SoLib.Controls
         private static void OnDataSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
             TreeMap treeMap = d as TreeMap;
-
+            Canvas canvas = new Canvas()
+            {
+                Width = treeMap.FindWidth(treeMap.FindTopData()),
+                Height = treeMap.FindHeight()
+            };
         }
 
         private double FindWidth(IData data)
         {
             double width = 0;
 
-            foreach (var item in DataSource)
+            foreach (var child in DataSource)
             {
-                if (item.ParentID == data.ID)
+                if (child.ParentID == data.ID)
                 {
-                    width += 70;
+                    width += 20;
+                    width += FindWidth(child);
                 }
             }
 
-            if (width > 0)
-            {
-                width -= 20;
-            }
-            else
+            if (width == 0)
             {
                 width = 50;
             }
@@ -61,12 +62,61 @@ namespace SoLib.Controls
             return width;
         }
 
-        private void DrawLabel()
+        private double FindHeight()
+        {
+            int level = 0;
+
+            foreach (var data in DataSource)
+            {
+                if (data.Level > level)
+                {
+                    level = data.Level;
+                }
+            }
+
+            return (level + 1) * 50 + level * 30;
+        }
+
+        private void LevelData(IData data)
+        {
+            foreach (var child in DataSource)
+            {
+                if (data.ChildrenIDs.Contains(child.ID))
+                {
+                    child.Level = data.Level + 1;
+                    LevelData(child);
+                }
+            }
+        }
+
+        private IData FindTopData()
         {
             foreach (var data in DataSource)
             {
-
+                if (data.ParentID == Guid.Empty)
+                {
+                    data.Level = 0;
+                    LevelData(data);
+                    return data;
+                }
             }
+
+            return null;
+        }
+
+        private void PlaceData(IData data)
+        {
+            if (data.Level == 0)
+            {
+                data.Top = 0;
+            }
+            else
+            {
+                data.Top = data.Level * 50 + (data.Level - 1) * 30;
+            }
+
+            double left = 0;
+
         }
     }
 }
