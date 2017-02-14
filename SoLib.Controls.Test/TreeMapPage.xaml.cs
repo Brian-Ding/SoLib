@@ -24,17 +24,20 @@ namespace SoLib.Controls.Test
             temp.Add(new TreeMapModel()
             {
                 ParentID = Guid.Empty,
-                ID = Guid.NewGuid()
+                ID = Guid.NewGuid(),
+                DataContent = new TextBlock() { Text = "AA" }
             });
             temp.Add(new TreeMapModel()
             {
                 ParentID = temp[0].ID,
-                ID = Guid.NewGuid()
+                ID = Guid.NewGuid(),
+                DataContent = new TextBlock() { Text = "BB" }
             });
             temp.Add(new TreeMapModel()
             {
                 ParentID = temp[0].ID,
-                ID = Guid.NewGuid()
+                ID = Guid.NewGuid(),
+                DataContent = new TextBlock() { Text = "CC" }
             });
 
             treeMap.DataSource = temp;
@@ -55,6 +58,6 @@ namespace SoLib.Controls.Test
 
         public int Level { get; set; }
 
-        public UIElement DataContent { get; set; }
+        public object DataContent { get; set; }
     }
 }

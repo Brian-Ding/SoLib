@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -92,19 +95,7 @@ namespace SoLib.Controls
 
         private static void OnDataSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
-            TreeMap treeMap = d as TreeMap;
-            Canvas canvas = new Canvas()
-            {
-                Width = treeMap.FindWidth(treeMap.FindTopData()),
-                Height = treeMap.FindHeight()
-            };
-            treeMap.PlaceData();
-            foreach (var data in treeMap.DataSource)
-            {
-                treeMap.DrawData(data, canvas);
-            }
-
-            treeMap.Content = canvas;
+            (d as TreeMap).Draw();
         }
 
         private double FindWidth(IData data)
@@ -188,11 +179,30 @@ namespace SoLib.Controls
                     }
                     else
                     {
-                        dataList[j].Top = i * HeightUnit + (i - 1) * HeightGap;
+                        dataList[j].Top = i * (HeightUnit + HeightGap);
                     }
                     dataList[j].Left = (FindWidth(FindTopData()) - dataList.Count * WidthUnit) / (dataList.Count + 1) * (j + 1) + WidthUnit * j;
                 }
             }
+        }
+
+        private void Draw()
+        {
+            Canvas canvas = new Canvas()
+            {
+                Width = FindWidth(FindTopData()),
+                Height = FindHeight()
+            };
+
+            PlaceData();
+
+            foreach (var data in this.DataSource)
+            {
+                DrawData(data, canvas);
+                DrawLine(data, canvas);
+            }
+
+            this.Content = canvas;
         }
 
         private void DrawData(IData data, Canvas canvas)
@@ -200,6 +210,27 @@ namespace SoLib.Controls
             Canvas.SetTop(data.DataContent as UIElement, data.Top);
             Canvas.SetLeft(data.DataContent as UIElement, data.Left);
             canvas.Children.Add(data.DataContent as UIElement);
+        }
+
+        private void DrawLine(IData data, Canvas canvas)
+        {
+            foreach (var child in DataSource)
+            {
+                if (child.ParentID == data.ID)
+                {
+                    Line line = new Line()
+                    {
+                        X1 = data.Left + WidthUnit / 2,
+                        X2 = child.Left + WidthUnit / 2,
+                        Y1 = data.Top + HeightUnit,
+                        Y2 = child.Top,
+                        Stroke = new SolidColorBrush(Colors.Black),
+                        StrokeThickness = 1
+                    };
+
+                    canvas.Children.Add(line);
+                }
+            }
         }
 
         private int FindMaxLevel()
