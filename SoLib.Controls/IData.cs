@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
 
 namespace SoLib.Controls
 {
@@ -21,11 +22,6 @@ namespace SoLib.Controls
         /// <summary>
         /// 
         /// </summary>
-        string Relation { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         double Top { get; set; }
 
         /// <summary>
@@ -33,14 +29,14 @@ namespace SoLib.Controls
         /// </summary>
         double Left { get; set; }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //List<Guid> ChildrenIDs { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
         int Level { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        object DataContent { get; set; }
     }
 }

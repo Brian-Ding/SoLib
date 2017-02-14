@@ -54,5 +54,7 @@ namespace SoLib.Controls.Test
         public double Left { get; set; }
 
         public int Level { get; set; }
+
+        public UIElement DataContent { get; set; }
     }
 }

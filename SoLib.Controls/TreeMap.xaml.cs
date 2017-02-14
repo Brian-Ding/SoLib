@@ -20,10 +20,62 @@ namespace SoLib.Controls
             this.InitializeComponent();
         }
 
-        private readonly double unitWidth = 50;
-        private readonly double unitHeight = 50;
-        private readonly double gapWidth = 20;
-        private readonly double gapHeight = 30;
+        /// <summary>
+        /// 
+        /// </summary>
+        public double WidthUnit
+        {
+            get { return (double)GetValue(WidthUnitProperty); }
+            set { SetValue(WidthUnitProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for WidthUnit.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty WidthUnitProperty =
+            DependencyProperty.Register("WidthUnit", typeof(double), typeof(TreeMap), new PropertyMetadata(50.0));
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double HeightUnit
+        {
+            get { return (double)GetValue(HeightUnitProperty); }
+            set { SetValue(HeightUnitProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for HeightUnit.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty HeightUnitProperty =
+            DependencyProperty.Register("HeightUnit", typeof(double), typeof(TreeMap), new PropertyMetadata(50.0));
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double WidthGap
+        {
+            get { return (double)GetValue(WidthGapProperty); }
+            set { SetValue(WidthGapProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for WidthGap.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty WidthGapProperty =
+            DependencyProperty.Register("WidthGap", typeof(double), typeof(TreeMap), new PropertyMetadata(20.0));
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double HeightGap
+        {
+            get { return (double)GetValue(HeightGapProperty); }
+            set { SetValue(HeightGapProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for HeightGap.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty HeightGapProperty =
+            DependencyProperty.Register("HeightGap", typeof(double), typeof(TreeMap), new PropertyMetadata(30.0));
+
+
 
         /// <summary>
         /// 
@@ -63,14 +115,18 @@ namespace SoLib.Controls
             {
                 if (child.ParentID == data.ID)
                 {
-                    width += 20;
                     width += FindWidth(child);
+                    width += WidthGap;
                 }
             }
 
             if (width == 0)
             {
-                width = 50;
+                width = WidthUnit;
+            }
+            else
+            {
+                width -= WidthGap;
             }
 
             return width;
@@ -88,7 +144,7 @@ namespace SoLib.Controls
                 }
             }
 
-            return (level + 1) * 50 + level * 30;
+            return (level + 1) * HeightUnit + level * HeightGap;
         }
 
         private void LevelData(IData data)
@@ -132,24 +188,18 @@ namespace SoLib.Controls
                     }
                     else
                     {
-                        dataList[j].Top = i * 50 + (i - 1) * 30;
+                        dataList[j].Top = i * HeightUnit + (i - 1) * HeightGap;
                     }
-                    dataList[j].Left = (FindWidth(FindTopData()) - dataList.Count * unitWidth) / (dataList.Count + 1) * (j + 1) + unitWidth * j;
+                    dataList[j].Left = (FindWidth(FindTopData()) - dataList.Count * WidthUnit) / (dataList.Count + 1) * (j + 1) + WidthUnit * j;
                 }
             }
         }
 
         private void DrawData(IData data, Canvas canvas)
         {
-            TextBlock textBlock = new TextBlock()
-            {
-                Text = data.ID.ToString(),
-                MaxWidth = 30
-            };
-
-            Canvas.SetTop(textBlock, data.Top);
-            Canvas.SetLeft(textBlock, data.Left);
-            canvas.Children.Add(textBlock);
+            Canvas.SetTop(data.DataContent as UIElement, data.Top);
+            Canvas.SetLeft(data.DataContent as UIElement, data.Left);
+            canvas.Children.Add(data.DataContent as UIElement);
         }
 
         private int FindMaxLevel()
