@@ -83,6 +83,23 @@ namespace SoLib.Controls
         /// <summary>
         /// 
         /// </summary>
+        public bool ConnectionLine
+        {
+            get { return (bool)GetValue(ConnectionLineProperty); }
+            set { SetValue(ConnectionLineProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ConnectionLine.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty ConnectionLineProperty =
+            DependencyProperty.Register("ConnectionLine", typeof(bool), typeof(TreeMap), new PropertyMetadata(false));
+
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public List<IData> DataSource
         {
             get { return (List<IData>)GetValue(DataSourceProperty); }
@@ -214,21 +231,24 @@ namespace SoLib.Controls
 
         private void DrawLine(IData data, Canvas canvas)
         {
-            foreach (var child in DataSource)
+            if (ConnectionLine)
             {
-                if (child.ParentID == data.ID)
+                foreach (var child in DataSource)
                 {
-                    Line line = new Line()
+                    if (child.ParentID == data.ID)
                     {
-                        X1 = data.Left + WidthUnit / 2,
-                        X2 = child.Left + WidthUnit / 2,
-                        Y1 = data.Top + HeightUnit,
-                        Y2 = child.Top,
-                        Stroke = new SolidColorBrush(Colors.Black),
-                        StrokeThickness = 1
-                    };
+                        Line line = new Line()
+                        {
+                            X1 = data.Left + (data.DataContent as FrameworkElement).Width / 2,
+                            X2 = child.Left + (data.DataContent as FrameworkElement).Width / 2,
+                            Y1 = data.Top + (data.DataContent as FrameworkElement).Height + HeightGap / 20,
+                            Y2 = child.Top - HeightGap / 20,
+                            Stroke = new SolidColorBrush(Colors.Black),
+                            StrokeThickness = 1
+                        };
 
-                    canvas.Children.Add(line);
+                        canvas.Children.Add(line);
+                    }
                 }
             }
         }
