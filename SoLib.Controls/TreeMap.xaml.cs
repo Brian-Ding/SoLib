@@ -11,12 +11,12 @@ using Windows.UI.Xaml.Shapes;
 namespace SoLib.Controls
 {
     /// <summary>
-    /// 
+    /// A control that visualize data's connection
     /// </summary>
     public sealed partial class TreeMap : UserControl
     {
         /// <summary>
-        /// 
+        /// TreeMap constructor
         /// </summary>
         public TreeMap()
         {
@@ -24,7 +24,7 @@ namespace SoLib.Controls
         }
 
         /// <summary>
-        /// 
+        /// Width of each data
         /// </summary>
         public double WidthUnit
         {
@@ -36,9 +36,8 @@ namespace SoLib.Controls
         private static readonly DependencyProperty WidthUnitProperty =
             DependencyProperty.Register("WidthUnit", typeof(double), typeof(TreeMap), new PropertyMetadata(50.0));
 
-
         /// <summary>
-        /// 
+        /// Height of each data
         /// </summary>
         public double HeightUnit
         {
@@ -50,9 +49,8 @@ namespace SoLib.Controls
         private static readonly DependencyProperty HeightUnitProperty =
             DependencyProperty.Register("HeightUnit", typeof(double), typeof(TreeMap), new PropertyMetadata(50.0));
 
-
         /// <summary>
-        /// 
+        /// Horizontal gap between each data
         /// </summary>
         public double WidthGap
         {
@@ -64,9 +62,8 @@ namespace SoLib.Controls
         private static readonly DependencyProperty WidthGapProperty =
             DependencyProperty.Register("WidthGap", typeof(double), typeof(TreeMap), new PropertyMetadata(20.0));
 
-
         /// <summary>
-        /// 
+        /// Vertical gap between each data
         /// </summary>
         public double HeightGap
         {
@@ -78,10 +75,8 @@ namespace SoLib.Controls
         private static readonly DependencyProperty HeightGapProperty =
             DependencyProperty.Register("HeightGap", typeof(double), typeof(TreeMap), new PropertyMetadata(30.0));
 
-
-
         /// <summary>
-        /// 
+        /// Visibility of ConnectionLine
         /// </summary>
         public bool ConnectionLine
         {
@@ -93,12 +88,8 @@ namespace SoLib.Controls
         private static readonly DependencyProperty ConnectionLineProperty =
             DependencyProperty.Register("ConnectionLine", typeof(bool), typeof(TreeMap), new PropertyMetadata(false));
 
-
-
-
-
         /// <summary>
-        /// 
+        /// DataSource for TreeMap control
         /// </summary>
         public List<IData> DataSource
         {
