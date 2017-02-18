@@ -116,7 +116,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="build.bat" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
