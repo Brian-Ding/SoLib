@@ -25,6 +25,9 @@
     <Compile Remove="ComputerVision\ComputerVisionManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="SoLib.CognitiveService.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="NETStandard.Library" Version="1.6" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.2-beta2" />
   </ItemGroup>
