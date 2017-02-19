@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -215,9 +216,11 @@ namespace SoLib.Controls
 
         private void DrawData(IData data, Canvas canvas)
         {
-            Canvas.SetTop(data.DataContent as UIElement, data.Top);
-            Canvas.SetLeft(data.DataContent as UIElement, data.Left);
-            canvas.Children.Add(data.DataContent as UIElement);
+            UIElement uielement = (data.DataContent as UIElement).DeepClone();
+
+            Canvas.SetTop(uielement, data.Top);
+            Canvas.SetLeft(uielement, data.Left);
+            canvas.Children.Add(uielement);
         }
 
         private void DrawLine(IData data, Canvas canvas)
@@ -262,6 +265,85 @@ namespace SoLib.Controls
         private List<IData> FindData(int level)
         {
             return DataSource.FindAll(d => d.Level == level);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    internal static class UIElementExtensions
+    {
+        internal static T DeepClone<T>(this T source) where T : UIElement
+        {
+
+            T result;
+
+            // Get the type
+            Type type = source.GetType();
+
+            // Create an instance
+            result = Activator.CreateInstance(type) as T;
+
+            CopyProperties<T>(source, result, type);
+
+            DeepCopyChildren<T>(source, result);
+
+            return result;
+        }
+
+        private static void DeepCopyChildren<T>(T source, T result) where T : UIElement
+        {
+            // Deep copy children.
+            Panel sourcePanel = source as Panel;
+            if (sourcePanel != null)
+            {
+                Panel resultPanel = result as Panel;
+                if (resultPanel != null)
+                {
+                    foreach (UIElement child in sourcePanel.Children)
+                    {
+                        // RECURSION!
+                        UIElement childClone = DeepClone(child);
+                        resultPanel.Children.Add(childClone);
+                    }
+                }
+            }
+        }
+
+        private static void CopyProperties<T>(T source, T result, Type type) where T : UIElement
+        {
+            // Copy all properties.
+
+            IEnumerable<PropertyInfo> properties = type.GetRuntimeProperties();
+
+            foreach (var property in properties)
+            {
+                if (property.Name != "Name") // do not copy names or we cannot add the clone to the same parent as the original.
+                {
+                    if ((property.CanWrite) && (property.CanRead))
+                    {
+                        object sourceProperty = property.GetValue(source);
+
+                        UIElement element = sourceProperty as UIElement;
+                        if (element != null)
+                        {
+                            UIElement propertyClone = element.DeepClone();
+                            property.SetValue(result, propertyClone);
+                        }
+                        else
+                        {
+                            try
+                            {
+                                property.SetValue(result, sourceProperty);
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine(ex);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

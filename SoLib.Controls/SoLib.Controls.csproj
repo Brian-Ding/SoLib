@@ -127,6 +127,7 @@
     <Compile Include="TreeMap.xaml.cs">
       <DependentUpon>TreeMap.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIElementExtensions.cs" />
     <Compile Include="ValueRec.xaml.cs">
       <DependentUpon>ValueRec.xaml</DependentUpon>
     </Compile>
