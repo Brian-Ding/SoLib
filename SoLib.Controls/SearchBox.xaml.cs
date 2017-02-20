@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -52,7 +53,7 @@ namespace SoLib.Controls
         /// </summary>
         public event EventHandler<SearchEventArgs> Search;
 
-        private void Search_Tapped(object sender, TappedRoutedEventArgs e)
+        private void OnSearch()
         {
             if (!string.IsNullOrEmpty(this.searchTxt.Text) && Search != null)
             {
@@ -63,6 +64,19 @@ namespace SoLib.Controls
 
                 EventHandler<SearchEventArgs> temp = Search;
                 temp(this, args);
+            }
+        }
+
+        private void Search_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            OnSearch();
+        }
+
+        private void searchTxt_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                OnSearch();
             }
         }
     }

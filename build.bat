@@ -23,4 +23,4 @@ echo on
 mkdir Packages
 call %nuget% pack ".\SoLib.Controls\SoLib.Controls.nuspec" -symbols -o Packages -p Configuration=%config% %version%
 
-call %nuget% push ".\Packages\SoLib.Controls.*.*.*.nupkg" -Source https://www.nuget.org/api/v2/package
+call %nuget% push ".\Packages\SoLib.Controls.*.*.*.nupkg"

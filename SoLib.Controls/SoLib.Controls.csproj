@@ -117,6 +117,7 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <None Include="SoLib.Controls.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IData.cs" />
@@ -127,7 +128,6 @@
     <Compile Include="TreeMap.xaml.cs">
       <DependentUpon>TreeMap.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIElementExtensions.cs" />
     <Compile Include="ValueRec.xaml.cs">
       <DependentUpon>ValueRec.xaml</DependentUpon>
     </Compile>

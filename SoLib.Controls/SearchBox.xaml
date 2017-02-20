@@ -15,7 +15,7 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <TextBox Name="searchTxt" PlaceholderText="{x:Bind Path=SearchTip, Mode=OneWay}"
-                     BorderThickness="0,0,0,0" Background="Transparent" 
+                     BorderThickness="0,0,0,0" Background="Transparent" KeyUp="searchTxt_KeyUp"
                      FontSize="{x:Bind Path=FontSize, Mode=OneWay}" Foreground="{x:Bind Path=Foreground, Mode=OneWay}"
                      FontFamily="{x:Bind Path=FontFamily, Mode=OneWay}" FontStretch="{x:Bind Path=FontStretch, Mode=OneWay}"
                      FontStyle="{x:Bind Path=FontStyle, Mode=OneWay}" FontWeight="{x:Bind Path=FontWeight, Mode=OneWay}"/>

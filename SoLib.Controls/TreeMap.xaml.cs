@@ -182,14 +182,7 @@ namespace SoLib.Controls
 
                 for (int j = 0; j < dataList.Count; j++)
                 {
-                    if (i == 0)
-                    {
-                        dataList[j].Top = 0;
-                    }
-                    else
-                    {
-                        dataList[j].Top = i * (HeightUnit + HeightGap);
-                    }
+                    dataList[j].Top = i * (HeightUnit + HeightGap);
                     dataList[j].Left = (FindWidth(FindTopData()) - dataList.Count * WidthUnit) / (dataList.Count + 1) * (j + 1) + WidthUnit * j;
                 }
             }
