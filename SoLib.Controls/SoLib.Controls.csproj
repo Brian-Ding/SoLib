@@ -120,6 +120,7 @@
     <None Include="SoLib.Controls.nuspec" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpandableList.cs" />
     <Compile Include="IData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchBox.xaml.cs">

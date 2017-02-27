@@ -5,6 +5,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -209,11 +210,18 @@ namespace SoLib.Controls
 
         private void DrawData(IData data, Canvas canvas)
         {
-            UIElement uielement = (data.DataContent as UIElement).DeepClone();
+            Uri uri = data.DataContent as Uri;
+            Image image = new Image()
+            {
+                Source = new BitmapImage(uri),
+                Height = 150,
+                Width = 150,
+                Stretch = Stretch.Uniform
+            };
 
-            Canvas.SetTop(uielement, data.Top);
-            Canvas.SetLeft(uielement, data.Left);
-            canvas.Children.Add(uielement);
+            Canvas.SetTop(image, data.Top);
+            Canvas.SetLeft(image, data.Left);
+            canvas.Children.Add(image);
         }
 
         private void DrawLine(IData data, Canvas canvas)

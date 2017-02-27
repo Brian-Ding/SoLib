@@ -9,5 +9,7 @@
     <StackPanel>
         <Button Content="ValueRec Test" Tag="ValueRec" HorizontalAlignment="Center" Margin="0,50,0,0" Click="Button_Click" />
         <Button Content="TreeMap Test" Tag="TreeMap" HorizontalAlignment="Center" Margin="0,15,0,0" Click="Button_Click" />
+        <Button Content="SearchBox Test" Tag="SearchBox" HorizontalAlignment="Center" Margin="0,15,0,0" Click="Button_Click" />
+        <Button Content="ExpandableList Test" Tag="SearchBox" HorizontalAlignment="Center" Margin="0,15,0,0" Click="Button_Click" />
     </StackPanel>
 </Page>
