@@ -214,14 +214,28 @@ namespace SoLib.Controls
             Image image = new Image()
             {
                 Source = new BitmapImage(uri),
-                Height = 150,
-                Width = 150,
-                Stretch = Stretch.Uniform
+                Height = 120,
+                Width = 120,
+                Stretch = Stretch.Uniform,
             };
 
-            Canvas.SetTop(image, data.Top);
-            Canvas.SetLeft(image, data.Left);
-            canvas.Children.Add(image);
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.Children.Add(image);
+
+            if (!string.IsNullOrEmpty(data.Relation))
+            {
+                TextBlock txtBlock = new TextBlock()
+                {
+                    Text = data.Relation,
+                    MaxWidth = 100,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+                stackPanel.Children.Add(txtBlock);
+            }
+
+            Canvas.SetTop(stackPanel, data.Top);
+            Canvas.SetLeft(stackPanel, data.Left);
+            canvas.Children.Add(stackPanel);
         }
 
         private void DrawLine(IData data, Canvas canvas)

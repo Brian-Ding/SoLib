@@ -38,5 +38,10 @@ namespace SoLib.Controls
         /// 
         /// </summary>
         object DataContent { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        string Relation { get; }
     }
 }
