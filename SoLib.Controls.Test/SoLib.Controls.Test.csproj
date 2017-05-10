@@ -98,6 +98,9 @@
     <Compile Include="ExpandableListPage.xaml.cs">
       <DependentUpon>ExpandableListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FrostedGlassPage.xaml.cs">
+      <DependentUpon>FrostedGlassPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="ExpandableListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FrostedGlassPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

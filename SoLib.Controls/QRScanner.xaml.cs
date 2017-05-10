@@ -51,7 +51,7 @@ namespace SoLib.Controls
             }
             await _mediaCapture.InitializeAsync(settings);
             qrCode.Source = _mediaCapture;
-            //mediaCapture.SetPreviewRotation(VideoRotation.Clockwise90Degrees);
+            _mediaCapture.SetPreviewRotation(VideoRotation.Clockwise90Degrees);
 
             // 设置2倍焦距
             //_mediaCapture.VideoDeviceController.ZoomControl.Value = 2f;
@@ -74,13 +74,15 @@ namespace SoLib.Controls
             _cameraInitialized = true;
         }
 
-        public async Task ScanAsync()
+        private async Task ScanAsync()
         {
             if (_cameraInitialized)
             {
                 _result = null;
                 while (_result == null)
                 {
+                    // 对焦
+                    await _mediaCapture.VideoDeviceController.FocusControl.FocusAsync();
                     var previewProperties = _mediaCapture.VideoDeviceController.GetMediaStreamProperties(MediaStreamType.VideoPreview) as VideoEncodingProperties;
                     if (previewProperties != null)
                     {

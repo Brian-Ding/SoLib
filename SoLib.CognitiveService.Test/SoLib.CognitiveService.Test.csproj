@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
+    <!--<Compile Include="**\*.cs" />-->
     <EmbeddedResource Include="**\*.resx" />
   </ItemGroup>
   <ItemGroup>
