@@ -36,77 +36,89 @@ namespace SoLib.Controls
         /// <summary>
         /// How blur the glass will be. Default value is 2.
         /// </summary>
-        public float BlurAmount
+        public double BlurAmount
         {
-            get { return (float)GetValue(BlurAmountProperty); }
+            get { return (double)GetValue(BlurAmountProperty); }
             set { SetValue(BlurAmountProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for BlurAmount.  This enables animation, styling, binding, etc...
         private static readonly DependencyProperty BlurAmountProperty =
-            DependencyProperty.Register("BlurAmount", typeof(float), typeof(FrostedGlass), new PropertyMetadata((float)2));
+            DependencyProperty.Register("BlurAmount", typeof(double), typeof(FrostedGlass), new PropertyMetadata(10.0));
 
 
         /// <summary>
         /// Transparency, range from 0 to 255. Default value is 25.
         /// </summary>
-        public byte Alpha
+        public int Alpha
         {
-            get { return (byte)GetValue(AlphaProperty); }
+            get { return (int)GetValue(AlphaProperty); }
             set { SetValue(AlphaProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Alpha.  This enables animation, styling, binding, etc...
         private static readonly DependencyProperty AlphaProperty =
-            DependencyProperty.Register("Alpha", typeof(byte), typeof(FrostedGlass), new PropertyMetadata((byte)25));
+            DependencyProperty.Register("Alpha", typeof(int), typeof(FrostedGlass), new PropertyMetadata(25));
 
 
         /// <summary>
         /// Multiply. Default value is 1.
         /// </summary>
-        public float Multiply
+        public double Multiply
         {
-            get { return (float)GetValue(MultiplyProperty); }
+            get { return (double)GetValue(MultiplyProperty); }
             set { SetValue(MultiplyProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Multiply.  This enables animation, styling, binding, etc...
         private static readonly DependencyProperty MultiplyProperty =
-            DependencyProperty.Register("Multiply", typeof(float), typeof(FrostedGlass), new PropertyMetadata((float)1));
+            DependencyProperty.Register("Multiply", typeof(double), typeof(FrostedGlass), new PropertyMetadata(1.0));
 
 
         /// <summary>
         /// Background ratio. Default value is 0.8f.
         /// </summary>
-        public float BackAmount
+        public double BackAmount
         {
-            get { return (float)GetValue(BackAmountProperty); }
+            get { return (double)GetValue(BackAmountProperty); }
             set { SetValue(BackAmountProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for BackAmount.  This enables animation, styling, binding, etc...
         private static readonly DependencyProperty BackAmountProperty =
-            DependencyProperty.Register("BackAmount", typeof(float), typeof(FrostedGlass), new PropertyMetadata(0.8f));
+            DependencyProperty.Register("BackAmount", typeof(double), typeof(FrostedGlass), new PropertyMetadata(0.8));
 
 
         /// <summary>
         /// Foreground ratio. Default value is 0.2f.
         /// </summary>
-        public float FrontAmout
+        public double FrontAmout
         {
-            get { return (float)GetValue(FrontAmoutProperty); }
+            get { return (double)GetValue(FrontAmoutProperty); }
             set { SetValue(FrontAmoutProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for FrontAmout.  This enables animation, styling, binding, etc...
         private static readonly DependencyProperty FrontAmoutProperty =
-            DependencyProperty.Register("FrontAmout", typeof(float), typeof(FrostedGlass), new PropertyMetadata(0.2f));
+            DependencyProperty.Register("FrontAmout", typeof(double), typeof(FrostedGlass), new PropertyMetadata(0.2));
+
+
+
+        public bool Hosted
+        {
+            get { return (bool)GetValue(HostedProperty); }
+            set { SetValue(HostedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Hosted.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty HostedProperty =
+            DependencyProperty.Register("Hosted", typeof(bool), typeof(FrostedGlass), new PropertyMetadata(true));
 
 
 
         private void FrostedGlass_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            InitializeFrostedGlass((float)RenderSize.Width, (float)RenderSize.Height, GlassColor, BlurAmount, Alpha, Multiply, BackAmount, FrontAmout);
+            InitializeFrostedGlass((float)RenderSize.Width, (float)RenderSize.Height, GlassColor, (float)BlurAmount, (byte)Alpha, (float)Multiply, (float)BackAmount, (float)FrontAmout);
         }
 
         private void InitializeFrostedGlass(float width, float height, Color color, float blurAmout, byte alpha, float multiply, float backAmout, float frontAmout)
@@ -131,7 +143,15 @@ namespace SoLib.Controls
             };
 
             CompositionEffectFactory factory = compositor.CreateEffectFactory(blurEffect);
-            CompositionBackdropBrush backdropBrush = compositor.CreateHostBackdropBrush();
+            CompositionBackdropBrush backdropBrush;
+            if (Hosted)
+            {
+                backdropBrush = compositor.CreateHostBackdropBrush();
+            }
+            else
+            {
+                backdropBrush = compositor.CreateBackdropBrush();
+            }
             CompositionEffectBrush brush = factory.CreateBrush();
             brush.SetSourceParameter("BackBrush", backdropBrush);
 

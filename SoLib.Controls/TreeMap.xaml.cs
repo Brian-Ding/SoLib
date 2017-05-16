@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -93,15 +94,15 @@ namespace SoLib.Controls
         /// <summary>
         /// DataSource for TreeMap control
         /// </summary>
-        public List<IData> DataSource
+        public IList<IData> DataSource
         {
-            get { return (List<IData>)GetValue(DataSourceProperty); }
+            get { return (IList<IData>)GetValue(DataSourceProperty); }
             set { SetValue(DataSourceProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for DataSource.  This enables animation, styling, binding, etc...
         private static readonly DependencyProperty DataSourceProperty =
-            DependencyProperty.Register("DataSource", typeof(List<IData>), typeof(TreeMap), new PropertyMetadata(0, OnDataSourceChanged));
+            DependencyProperty.Register("DataSource", typeof(IList<IData>), typeof(TreeMap), new PropertyMetadata(0, OnDataSourceChanged));
 
         private static void OnDataSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
@@ -279,7 +280,7 @@ namespace SoLib.Controls
 
         private List<IData> FindData(int level)
         {
-            return DataSource.FindAll(d => d.Level == level);
+            return DataSource.ToList().FindAll(d => d.Level == level);
         }
     }
 

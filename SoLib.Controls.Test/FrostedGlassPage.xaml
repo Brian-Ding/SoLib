@@ -8,8 +8,44 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-        <controls:FrostedGlass GlassColor="Green" />
+    <Grid Margin="0,-2,0,2">
+        <StackPanel>
+            <Rectangle
+                Height="50"
+                Margin="10,10"
+                Fill="Red" />
+            <Rectangle
+                Height="50"
+                Margin="10,10"
+                Fill="Orange" />
+            <Rectangle
+                Height="50"
+                Margin="10,10"
+                Fill="Yellow" />
+            <Rectangle
+                Height="50"
+                Margin="10,10"
+                Fill="Green" />
+            <Rectangle
+                Height="50"
+                Margin="10,10"
+                Fill="Blue" />
+            <Rectangle
+                Height="50"
+                Margin="10,10"
+                Fill="Indigo" />
+            <Rectangle
+                Height="50"
+                Margin="10,10"
+                Fill="Purple" />
+        </StackPanel>
+        <controls:FrostedGlass
+            Alpha="25"
+            BackAmount="0.9"
+            BlurAmount="2"
+            FrontAmout="0.1"
+            GlassColor="Green"
+            Hosted="False" />
         <TextBlock
             HorizontalAlignment="Center"
             VerticalAlignment="Center"

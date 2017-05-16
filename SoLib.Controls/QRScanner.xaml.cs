@@ -121,7 +121,7 @@ namespace SoLib.Controls
         }
     }
 
-    public class QRCodeFoundEventArgs : EventArgs
+    public sealed class QRCodeFoundEventArgs
     {
         public Result Result { get; set; }
     }

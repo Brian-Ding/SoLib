@@ -2,17 +2,43 @@
 <package >
   <metadata>
     <id>SoLib.Controls</id>
-    <version>1.1.10</version>
+    <version>1.2.1.0</version>
     <title>SoLib.Controls</title>
     <authors>Brian Ding</authors>
+    <owners>Brian Ding</owners>
+    <licenseUrl>https://github.com/Brian-Ding/SoLib</licenseUrl>
     <projectUrl>https://github.com/Brian-Ding/SoLib</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A uwp control library.</description>
-    <releaseNotes>Update SearchBox, respond to enter key.</releaseNotes>
+    <description>A uwp controls library.</description>
+    <releaseNotes>Add QRScanner and FrostedGlass</releaseNotes>
     <copyright>Copyright 2017</copyright>
-    <tags>uwp</tags>
+    <tags>UWP Controls</tags>
+    <dependencies>
+      <dependency id="Win2D.uwp" version="1.20.0"/>
+      <dependency id="ZXing.uwp" version="1.0.1"/>
+    </dependencies>
   </metadata>
+
   <files>
-    <file src="..\SoLib.Controls\bin\Release\" target="lib\uap10.0" />
+    <!-- WinMd and IntelliSense files -->
+    <file src="..\SoLib.Controls\bin\Release\SoLib.Controls.winmd" target="lib\uap10.0"/>
+    <file src="..\SoLib.Controls\bin\Release\SoLib.Controls.xml" target="lib\uap10.0"/>
+
+    <!-- XAML controls -->
+    <file src="..\SoLib.Controls\bin\Release\SoLib.Controls\FrostedGlass.xaml" target="lib\uap10.0\SoLib.Controls"/>
+    <file src="..\SoLib.Controls\bin\Release\SoLib.Controls\QRScanner.xaml" target="lib\uap10.0\SoLib.Controls"/>
+    <file src="..\SoLib.Controls\bin\Release\SoLib.Controls\SearchBox.xaml" target="lib\uap10.0\SoLib.Controls"/>
+    <file src="..\SoLib.Controls\bin\Release\SoLib.Controls\TreeMap.xaml" target="lib\uap10.0\SoLib.Controls"/>
+    <file src="..\SoLib.Controls\bin\Release\SoLib.Controls\ValueRec.xaml" target="lib\uap10.0\SoLib.Controls"/>
+    <file src="..\SoLib.Controls\bin\Release\SoLib.Controls\SoLib.Controls.xr.xml" target="lib\uap10.0\SoLib.Controls"/>
+
+    <!-- DLLs and resources -->
+    <file src="..\SoLib.Controls\bin\Release\SoLib.Controls.pri" target="lib\uap10.0"/>
+
+    <!-- Toolbox/Assets pane surrpot -->
+    <file src="..\SoLib.Controls\VisualStudioToolsManifest.xml" target="lib\uap10.0\SoLib.Controls\tools"/>
+
+    <!-- .targets -->
+    <file src="..\SoLib.Controls\SoLib.Controls.targets" target="build\uap10.0"/>
   </files>
 </package>
