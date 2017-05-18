@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace SoLib.Controls
 {
-    public class ExpandableList : ListView
+    public sealed class ExpandableList : ListView
     {
         private int _selectedIndex = -1;
 

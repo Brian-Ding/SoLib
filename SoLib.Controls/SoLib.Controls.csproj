@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C52E2CC9-5614-470B-B2E0-F67C7E2CBCBC}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SoLib.Controls</RootNamespace>
     <AssemblyName>SoLib.Controls</AssemblyName>
@@ -124,6 +124,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpandableList.cs" />
+    <Compile Include="FrostedGlass.xaml.cs">
+      <DependentUpon>FrostedGlass.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QRScanner.xaml.cs">
@@ -140,6 +143,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="FrostedGlass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="QRScanner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1,0 +1,13 @@
+﻿<FileList>
+  <File Reference = "SoLib.Controls.dll">
+    <ToolboxItems VSCategory="SoLib.Controls" BlendCategory="SoLib.Controls">
+      <Item Type="SoLib.Controls.FrostedGlass" />
+
+      <!-- Any number of additional Items -->
+      <Item Type="SoLib.Controls.QRScanner" />
+      <Item Type="SoLib.Controls.SearchBox" />
+      <Item Type="SoLib.Controls.TreeMap" />
+      <Item Type="SoLib.Controls.ValueRec" />
+    </ToolboxItems>
+  </File>
+</FileList>

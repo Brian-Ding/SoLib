@@ -84,7 +84,7 @@ namespace SoLib.Controls
     /// <summary>
     /// 
     /// </summary>
-    public class SearchEventArgs : EventArgs
+    public sealed class SearchEventArgs
     {
         /// <summary>
         /// 

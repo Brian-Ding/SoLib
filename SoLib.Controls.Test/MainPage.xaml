@@ -9,33 +9,39 @@
     <StackPanel>
         <Button
             Margin="0,50,0,0"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Stretch"
             Click="Button_Click"
             Content="ValueRec Test"
             Tag="ValueRec" />
         <Button
             Margin="0,15,0,0"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Stretch"
             Click="Button_Click"
             Content="TreeMap Test"
             Tag="TreeMap" />
         <Button
             Margin="0,15,0,0"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Stretch"
             Click="Button_Click"
             Content="SearchBox Test"
             Tag="SearchBox" />
         <Button
             Margin="0,15,0,0"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Stretch"
             Click="Button_Click"
             Content="ExpandableList Test"
             Tag="SearchBox" />
         <Button
             Margin="0,15,0,0"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Stretch"
             Click="Button_Click"
             Content="QRScanner Test"
             Tag="QRScanner" />
+        <Button
+            Margin="0,15,0,0"
+            HorizontalAlignment="Stretch"
+            Click="Button_Click"
+            Content="FrostedGlass Test"
+            Tag="FrostedGlass" />
     </StackPanel>
 </Page>
