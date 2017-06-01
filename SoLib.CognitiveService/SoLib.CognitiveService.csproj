@@ -6,33 +6,7 @@
     <OutputType>library</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
-    <EmbeddedResource Include="**\*.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="obj\**" />
-    <EmbeddedResource Remove="obj\**" />
-    <None Remove="obj\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Common\ErrorResult.cs" />
-    <Compile Remove="Common\ErrorResult.cs" />
-    <Compile Remove="Common\IResult.cs" />
-    <Compile Remove="Common\IResult.cs" />
-    <Compile Remove="ComputerVision\AnalyzeImageResult.cs" />
-    <Compile Remove="ComputerVision\AnalyzeImageResult.cs" />
-    <Compile Remove="ComputerVision\ComputerVisionManager.cs" />
-    <Compile Remove="ComputerVision\ComputerVisionManager.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="SoLib.CognitiveService.nuspec" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="NETStandard.Library" Version="1.6" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.2-beta2" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="ComputerVision\" />
   </ItemGroup>
 </Project>
