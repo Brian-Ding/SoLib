@@ -12,12 +12,14 @@ namespace SoLib.Common
             for (int i = 0; i < input.Length; i++)
             {
                 key = input[i];
-                // insert the key into sorted sequence input[1]...input[j-1]
+                // insert the key into sorted sequence input[0]...input[i-1]
                 int j = i - 1;
-                while (j > 0 && input[j] > key)
+                while (j >= 0 && input[j] > key)
                 {
+                    // set next number in the array to be this one.
                     input[j + 1] = input[j];
-                    j = j - 1;
+                    // move to the last number.
+                    j--;
                 }
                 input[j + 1] = key;
             }
