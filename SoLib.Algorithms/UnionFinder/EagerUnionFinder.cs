@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SoLib.Common
+namespace SoLib.Algorithms.UnionFinder
 {
     public class EagerUnionFinder : BaseUnionFinder
     {
