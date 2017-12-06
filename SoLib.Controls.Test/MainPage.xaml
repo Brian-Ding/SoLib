@@ -17,12 +17,6 @@
             Margin="0,15,0,0"
             HorizontalAlignment="Stretch"
             Click="Button_Click"
-            Content="TreeMap Test"
-            Tag="TreeMap" />
-        <Button
-            Margin="0,15,0,0"
-            HorizontalAlignment="Stretch"
-            Click="Button_Click"
             Content="SearchBox Test"
             Tag="SearchBox" />
         <Button
@@ -43,5 +37,11 @@
             Click="Button_Click"
             Content="FrostedGlass Test"
             Tag="FrostedGlass" />
+        <Button
+            Margin="0,15,0,0"
+            HorizontalAlignment="Stretch"
+            Click="Button_Click"
+            Content="ElementTree Test"
+            Tag="ElementTree" />
     </StackPanel>
 </Page>

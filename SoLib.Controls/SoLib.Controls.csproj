@@ -123,6 +123,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ElementTree\Element.cs" />
+    <Compile Include="ElementTree\ElementTree.cs" />
     <Compile Include="ExpandableList.cs" />
     <Compile Include="FrostedGlass.xaml.cs">
       <DependentUpon>FrostedGlass.xaml</DependentUpon>
