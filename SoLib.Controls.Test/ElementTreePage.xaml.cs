@@ -23,7 +23,11 @@ namespace SoLib.Controls.Test
                 new Element(Guid.NewGuid(), new Rectangle() { Fill = new SolidColorBrush(Colors.Orange), Height = 50, Width = 50 }, new Button(), new List<Element>
                 {
                     new Element(Guid.NewGuid(), new Rectangle() { Fill = new SolidColorBrush(Colors.Purple), Height = 50, Width = 50 }, new Button(), null),
-                    new Element(Guid.NewGuid(), new Rectangle() { Fill = new SolidColorBrush(Colors.Black), Height = 50, Width = 50 }, new Button(), null)
+                    new Element(Guid.NewGuid(), new Rectangle() { Fill = new SolidColorBrush(Colors.Black), Height = 50, Width = 50 }, new Button(), new List<Element>
+                    {
+                        new Element(Guid.NewGuid(), new Rectangle() { Fill = new SolidColorBrush(Colors.Brown), Height = 50, Width = 50 }, new Button(), null),
+                        new Element(Guid.NewGuid(), new Rectangle() { Fill = new SolidColorBrush(Colors.Pink), Height = 50, Width = 50 }, new Button(), null),
+                    })
                 }),
                 new Element(Guid.NewGuid(), new Rectangle() { Fill = new SolidColorBrush(Colors.Yellow), Height = 50, Width = 50 }, new Button(), new List<Element>()
                 {

@@ -123,6 +123,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ElementTree\Arrow.cs" />
     <Compile Include="ElementTree\Element.cs" />
     <Compile Include="ElementTree\ElementTree.cs" />
     <Compile Include="ExpandableList.cs" />

@@ -28,47 +28,58 @@ namespace SoLib.Controls.ElementTree
         {
             ElementTree elementTree = d as ElementTree;
             elementTree.Children.Clear();
-            elementTree.Width = elementTree.SetPosition(elementTree.RootElement, 0, 0);
-            elementTree.Height = elementTree.Draw(elementTree.RootElement);
+            elementTree.Width = elementTree.SetLeft(elementTree.RootElement);
+            elementTree.Height = elementTree.SetTop(elementTree.RootElement);
+            elementTree.Draw(elementTree.RootElement);
             elementTree.Background = new SolidColorBrush(Colors.Azure);
         }
 
-        private Double SetPosition(Element element, Double left, Double top)
+        private Double SetLeft(Element element, Double leftMargin = 0)
         {
-            Double width = 0;
-            Double childCount = element.Children.Count;
+            Double childWidth = 0;
+            Int32 childCount = element.Children.Count;
 
             for (int i = 0; i < childCount; i++)
             {
-                Element child = element.Children[i];
-                Double childWidth = SetPosition(child, left + width, top + child.Height);
-                child.Left = left + width + (childWidth - child.Width) / 2;
-                child.Top = top + element.Height;
-                width += childWidth;
+                childWidth += SetLeft(element.Children[i], childWidth + leftMargin);
             }
 
-            width += width == 0 ? element.Width : 0;
-            element.Left = left + (width - element.Width) / 2;
-            element.Top = top;
-
-            return width;
+            if (childWidth < element.Width)
+            {
+                element.Left = leftMargin + MARGIN;
+                return element.Width + MARGIN;
+            }
+            else
+            {
+                element.Left = leftMargin + (childWidth - element.Width) / 2;
+                return childWidth;
+            }
         }
 
-        private Double Draw(Element element)
+        private Double SetTop(Element element, Double top = 0)
         {
-            Double height = 0;
+            Int32 childCount = element.Children.Count;
+            element.Top = top;
+            Double height = element.Top + element.Height;
 
-            Children.Add(element.Content);
-            SetLeft(element.Content, element.Left);
-            SetTop(element.Content, element.Top);
-            height = Math.Max(height, (element.Top + element.Height));
-
-            for (int i = 0; i < element.Children.Count; i++)
+            for (int i = 0; i < childCount; i++)
             {
-                height = Math.Max(height, Draw(element.Children[i]));
+                Element childElement = element.Children[i];
+                height = Math.Max(height, SetTop(childElement, top + element.Height + 2 * 10));
             }
 
             return height;
+        }
+
+        private void Draw(Element element)
+        {
+            Canvas.SetLeft(element.Content, element.Left);
+            Canvas.SetTop(element.Content, element.Top);
+            this.Children.Add(element.Content);
+            for (int i = 0; i < element.Children.Count; i++)
+            {
+                Draw(element.Children[i]);
+            }
         }
     }
 }
