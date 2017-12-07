@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace SoLib.Controls.ElementTree
         private const Double THETA = 15 * Math.PI / 180;
         private const Double RADIUS = 20;
 
+        private Int32 _deferLevel;
         private Double _endX;
         private Double _endY;
 
@@ -23,8 +25,6 @@ namespace SoLib.Controls.ElementTree
             get { return (Double)GetValue(EndXProperty); }
             set { SetValue(EndXProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for EndX.  This enables animation, styling, binding, etc...
         private static readonly DependencyProperty EndXProperty =
             DependencyProperty.Register("EndX", typeof(Double), typeof(Arrow), new PropertyMetadata(0, OnEndXChanged));
 
@@ -33,31 +33,17 @@ namespace SoLib.Controls.ElementTree
             throw new NotImplementedException();
         }
 
-
-
         public Double EndY
         {
             get { return (Double)GetValue(EndYProperty); }
             set { SetValue(EndYProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for EndY.  This enables animation, styling, binding, etc...
         private static readonly DependencyProperty EndYProperty =
             DependencyProperty.Register("EndY", typeof(Double), typeof(Arrow), new PropertyMetadata(0, OnEndYChanged));
 
         private static void OnEndYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             throw new NotImplementedException();
-        }
-
-        public Arrow()
-        {
-            SizeChanged += OnSizeChanged;
-        }
-
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            UpdatePath();
         }
 
         private void UpdatePath()
@@ -93,6 +79,45 @@ namespace SoLib.Controls.ElementTree
 
             //InvalidateArrange();
             Data = pathGeometry;
+        }
+
+        public IDisposable DeferRefresh()
+        {
+            _deferLevel++;
+            return new DeferHelper(this);
+        }
+
+        internal void EndDefer()
+        {
+            if (_deferLevel > 0)
+            {
+                _deferLevel--;
+            }
+
+            if (_deferLevel == 0)
+            {
+                UpdatePath();
+            }
+        }
+    }
+
+    internal class DeferHelper : IDisposable
+    {
+        private Arrow _path;
+
+        public DeferHelper(Arrow path)
+        {
+            _path = path;
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            if (_path != null)
+            {
+                _path.EndDefer();
+                _path = null;
+            }
         }
     }
 }
