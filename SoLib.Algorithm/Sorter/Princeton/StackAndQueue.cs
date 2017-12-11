@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SoLib.Algorithms.Princeton
+namespace SoLib.Algorithm.Princeton
 {
     public class LinkedNode<T>
     {
@@ -99,7 +99,7 @@ namespace SoLib.Algorithms.Princeton
             {
                 _head = null;
                 _tail = null;
-                return null;
+                return default(T);
             }
             else
             {

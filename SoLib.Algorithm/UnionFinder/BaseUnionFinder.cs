@@ -1,4 +1,4 @@
-namespace SoLib.Algorithms.UnionFinder
+namespace SoLib.Algorithm.UnionFinder
 {
     public abstract class BaseUnionFinder
     {

@@ -17,107 +17,157 @@ namespace SoLib.Controls.ElementTree
         private const Double RADIUS = 20;
 
         private Int32 _deferLevel;
-        private Double _endX;
-        private Double _endY;
+        private Point _arrowStartPoint;
+        private Point _arrowEndPoint;
+        private Quadrant _quadrant;
 
-        public Double EndX
+        public Point EndPoint
         {
-            get { return (Double)GetValue(EndXProperty); }
-            set { SetValue(EndXProperty, value); }
+            get { return (Point)GetValue(PointProperty); }
+            set { SetValue(PointProperty, value); }
         }
-        private static readonly DependencyProperty EndXProperty =
-            DependencyProperty.Register("EndX", typeof(Double), typeof(Arrow), new PropertyMetadata(0, OnEndXChanged));
+        private static readonly DependencyProperty PointProperty =
+            DependencyProperty.Register(nameof(EndPoint), typeof(Point), typeof(Arrow), new PropertyMetadata(new Point(0, 0), OnPointChanged));
 
-        private static void OnEndXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnPointChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            Arrow arrow = d as Arrow;
+            if (arrow.EndPoint.X >= 0 && arrow.EndPoint.Y >= 0)
+            {
+                arrow._quadrant = Quadrant.First;
+            }
+            else if (arrow.EndPoint.X < 0 && arrow.EndPoint.Y >= 0)
+            {
+                arrow._quadrant = Quadrant.Second;
+            }
+            else if (arrow.EndPoint.X < 0 && arrow.EndPoint.Y < 0)
+            {
+                arrow._quadrant = Quadrant.Third;
+            }
+            else
+            {
+                arrow._quadrant = Quadrant.Fourth;
+            }
+            arrow._arrowEndPoint = arrow.EndPoint;
+            arrow.UpdateSize();
+            arrow.UpdatePath();
         }
 
-        public Double EndY
+        public Arrow()
         {
-            get { return (Double)GetValue(EndYProperty); }
-            set { SetValue(EndYProperty, value); }
+            _arrowStartPoint = new Point(0, 0);
         }
-        private static readonly DependencyProperty EndYProperty =
-            DependencyProperty.Register("EndY", typeof(Double), typeof(Arrow), new PropertyMetadata(0, OnEndYChanged));
 
-        private static void OnEndYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private void UpdateSize()
         {
-            throw new NotImplementedException();
+            //this.Width = Math.Abs(Point.X);
+            //this.Height = Math.Abs(Point.Y);
         }
 
         private void UpdatePath()
         {
             PathGeometry pathGeometry = new PathGeometry();
 
-            PathFigure lineFigure = new PathFigure() { IsClosed = true };
+            // Draw line
+            PathFigure lineFigure = new PathFigure() { IsClosed = false };
             PolyLineSegment lineSegment = new PolyLineSegment();
-            lineSegment.Points.Add(new Point(10, 10));
-            lineSegment.Points.Add(new Point(EndX, EndY));
+            
+            lineSegment.Points.Add(ToScreenPoint(_arrowStartPoint));
+            lineSegment.Points.Add(ToScreenPoint(_arrowEndPoint));
             lineFigure.Segments.Add(lineSegment);
             pathGeometry.Figures.Add(lineFigure);
 
-            PathFigure triangleFigure = new PathFigure() { IsClosed = true };
-            PolyLineSegment triangleSegment = new PolyLineSegment();
+            //PathFigure triangleFigure = new PathFigure() { IsClosed = true };
+            //PolyLineSegment triangleSegment = new PolyLineSegment();
 
-            Double alpha = Math.Atan(EndY / EndX);
-            triangleSegment.Points.Add(new Point(EndX, EndY));
+            //Double alpha = Math.Atan(Y / X);
+            //triangleSegment.Points.Add(new Point(_arrowEndX, _arrowEndY));
 
-            Double beta = Math.PI + alpha - THETA;
-            Double x = RADIUS * Math.Cos(beta) + EndX;
-            Double y = RADIUS * Math.Sin(beta) + EndY;
-            triangleSegment.Points.Add(new Point(x, y));
+            //Double beta = Math.PI + alpha - THETA;
+            //Double x = RADIUS * Math.Cos(beta) + _arrowEndX;
+            //Double y = RADIUS * Math.Sin(beta) + _arrowEndY;
+            //triangleSegment.Points.Add(new Point(x, y));
 
-            beta = Math.PI + alpha + THETA;
-            x = RADIUS * Math.Cos(beta) + EndX;
-            y = RADIUS * Math.Sin(beta) + EndY;
-            triangleSegment.Points.Add(new Point(x, y));
-            triangleSegment.Points.Add(new Point(EndX, EndY));
+            //beta = Math.PI + alpha + THETA;
+            //x = RADIUS * Math.Cos(beta) + _arrowEndX;
+            //y = RADIUS * Math.Sin(beta) + _arrowEndY;
+            //triangleSegment.Points.Add(new Point(x, y));
+            //triangleSegment.Points.Add(new Point(_arrowEndX, _arrowEndY));
 
-            triangleFigure.Segments.Add(triangleSegment);
-            pathGeometry.Figures.Add(triangleFigure);
+            //triangleFigure.Segments.Add(triangleSegment);
+            //pathGeometry.Figures.Add(triangleFigure);
 
             //InvalidateArrange();
             Data = pathGeometry;
         }
 
-        public IDisposable DeferRefresh()
+        private Point ToScreenPoint(Point point)
         {
-            _deferLevel++;
-            return new DeferHelper(this);
-        }
-
-        internal void EndDefer()
-        {
-            if (_deferLevel > 0)
+            Point newPoint;
+            switch (_quadrant)
             {
-                _deferLevel--;
+                case Quadrant.First:
+                    newPoint = new Point(point.X, EndPoint.Y - point.Y);
+                    break;
+                case Quadrant.Second:
+                    newPoint = new Point(point.X - EndPoint.X, EndPoint.Y - point.Y);
+                    break;
+                case Quadrant.Third:
+                    newPoint = new Point(point.X - EndPoint.X, -point.Y);
+                    break;
+                case Quadrant.Fourth:
+                    newPoint = new Point(point.X, -point.Y);
+                    break;
             }
 
-            if (_deferLevel == 0)
-            {
-                UpdatePath();
-            }
+            return newPoint;
         }
+
+        //public IDisposable DeferRefresh()
+        //{
+        //    _deferLevel++;
+        //    return new DeferHelper(this);
+        //}
+
+        //internal void EndDefer()
+        //{
+        //    if (_deferLevel > 0)
+        //    {
+        //        _deferLevel--;
+        //    }
+
+        //    if (_deferLevel == 0)
+        //    {
+        //        UpdatePath();
+        //    }
+        //}
     }
 
-    internal class DeferHelper : IDisposable
+    internal enum Quadrant
     {
-        private Arrow _path;
-
-        public DeferHelper(Arrow path)
-        {
-            _path = path;
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            if (_path != null)
-            {
-                _path.EndDefer();
-                _path = null;
-            }
-        }
+        First,
+        Second,
+        Third,
+        Fourth
     }
+
+    //internal class DeferHelper : IDisposable
+    //{
+    //    private Arrow _path;
+
+    //    public DeferHelper(Arrow path)
+    //    {
+    //        _path = path;
+    //    }
+
+    //    public void Dispose()
+    //    {
+    //        GC.SuppressFinalize(this);
+    //        if (_path != null)
+    //        {
+    //            _path.EndDefer();
+    //            _path = null;
+    //        }
+    //    }
+    //}
 }

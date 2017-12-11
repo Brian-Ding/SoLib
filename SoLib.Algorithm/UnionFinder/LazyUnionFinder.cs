@@ -1,6 +1,6 @@
 using System;
 
-namespace SoLib.Algorithms.UnionFinder
+namespace SoLib.Algorithm.UnionFinder
 {
     public class LazyUnionFinder : BaseUnionFinder
     {

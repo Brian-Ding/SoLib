@@ -1,4 +1,4 @@
-namespace SoLib.Algorithms.Sorter
+namespace SoLib.Algorithm.Sorter
 {
     public class Sorter
     {
