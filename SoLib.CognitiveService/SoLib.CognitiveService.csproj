@@ -6,7 +6,7 @@
     <OutputType>library</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NETStandard.Library" Version="1.6" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.2-beta2" />
+    <PackageReference Include="NETStandard.Library" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta1" />
   </ItemGroup>
 </Project>
