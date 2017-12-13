@@ -13,7 +13,7 @@ namespace SoLib.Algorithm.Matrix
         private Double[,] _temp;
         private Int32 _dimension;
         private Int32 _maxIteration;
-        private const Double TOLERANCE = 0.0001;
+        private const Double TOLERANCE = 0.000001;
 
         public Double[,] EigenVectors { get; set; }
         public Double[] EigenValues { get; set; }
@@ -34,20 +34,9 @@ namespace SoLib.Algorithm.Matrix
             while (GetOffDiagonalSum() >= TOLERANCE && iteration <= _maxIteration)
             {
                 iteration++;
-                Int32 i, j;
                 Double sin, cos, tan, tau;
-                (Int32 _maxOffDiagonalRow, Int32 _maxOffDiagonalColumn, Double w) = FindMaxOffDiagonal();
-                if (_maxOffDiagonalRow <= _maxOffDiagonalColumn)
-                {
-                    i = _maxOffDiagonalRow;
-                    j = _maxOffDiagonalColumn;
-                }
-                else
-                {
-                    i = _maxOffDiagonalColumn;
-                    j = _maxOffDiagonalRow;
-                }
-                tan = SolveQuadratic(w);
+                (Int32 i, Int32 j, Double omega) = FindMaxOffDiagonal();
+                tan = SolveQuadratic(omega);
                 (sin, cos) = SolveSinCos(tan);
                 tau = (1 - cos) / sin;
 
@@ -92,7 +81,7 @@ namespace SoLib.Algorithm.Matrix
         /// 
         /// </summary>
         /// <returns></returns>
-        private (Int32 _maxOffDiagonalRow, Int32 _maxOffDiagonalColumn, Double w) FindMaxOffDiagonal()
+        private (Int32 _maxOffDiagonalRow, Int32 _maxOffDiagonalColumn, Double omega) FindMaxOffDiagonal()
         {
             Double max = 0;
             Int32 _maxOffDiagonalRow = 0;
@@ -115,29 +104,19 @@ namespace SoLib.Algorithm.Matrix
                 }
             }
 
-            Double w = (_matrix[_maxOffDiagonalColumn, _maxOffDiagonalColumn] - _matrix[_maxOffDiagonalRow, _maxOffDiagonalRow]) / (2 * _matrix[_maxOffDiagonalRow, _maxOffDiagonalColumn]);
+            Double omega = (_matrix[_maxOffDiagonalColumn, _maxOffDiagonalColumn] - _matrix[_maxOffDiagonalRow, _maxOffDiagonalRow]) / (2 * _matrix[_maxOffDiagonalRow, _maxOffDiagonalColumn]);
 
-            return (_maxOffDiagonalRow, _maxOffDiagonalColumn, w);
+            return (_maxOffDiagonalRow, _maxOffDiagonalColumn, omega);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="w"></param>
+        /// <param name="omega"></param>
         /// <returns>t = tanΘ</returns>
-        private Double SolveQuadratic(Double w)
+        private Double SolveQuadratic(Double omega)
         {
-            Double t1 = -w + Math.Sqrt(w * w + 1);
-            Double t2 = -w - Math.Sqrt(w * w + 1);
-
-            if (t1 >= t2)
-            {
-                return t2;
-            }
-            else
-            {
-                return t1;
-            }
+            return omega > 0 ? -omega + Math.Sqrt(omega * omega + 1) : -omega - Math.Sqrt(omega * omega + 1);
         }
 
         /// <summary>
