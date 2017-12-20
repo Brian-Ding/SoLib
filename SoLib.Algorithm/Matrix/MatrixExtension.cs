@@ -20,5 +20,16 @@ namespace SoLib.Algorithm.Matrix
 
             return content;
         }
+
+        public static Int32[] SubArray(this Int32[] array, Int32 startIndex, Int32 endIndex)
+        {
+            Int32[] output = new Int32[endIndex - startIndex + 1];
+            for (int i = 0; i < output.Length; i++)
+            {
+                output[i] = array[startIndex + i];
+            }
+
+            return output;
+        }
     }
 }

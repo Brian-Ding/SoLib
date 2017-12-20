@@ -77,21 +77,22 @@ namespace SoLib.Controls.ElementTree
             lineFigure.Segments.Add(lineSegment);
             pathGeometry.Figures.Add(lineFigure);
 
-            //PathFigure triangleFigure = new PathFigure() { IsClosed = true };
-            //PolyLineSegment triangleSegment = new PolyLineSegment();
+            // Draw triangle
+            PathFigure triangleFigure = new PathFigure() { IsClosed = true };
+            PolyLineSegment triangleSegment = new PolyLineSegment();
 
-            //Double alpha = Math.Atan(Y / X);
-            //triangleSegment.Points.Add(new Point(_arrowEndX, _arrowEndY));
+            Double alpha = Math.Atan(_arrowEndPoint.Y / _arrowEndPoint.X);
+            triangleSegment.Points.Add(_arrowEndPoint);
 
-            //Double beta = Math.PI + alpha - THETA;
-            //Double x = RADIUS * Math.Cos(beta) + _arrowEndX;
-            //Double y = RADIUS * Math.Sin(beta) + _arrowEndY;
-            //triangleSegment.Points.Add(new Point(x, y));
+            Double beta = Math.PI + alpha - THETA;
+            Double x = RADIUS * Math.Cos(beta) + _arrowEndPoint.X;
+            Double y = RADIUS * Math.Sin(beta) + _arrowEndPoint.Y;
+            triangleSegment.Points.Add(new Point(x, y));
 
-            //beta = Math.PI + alpha + THETA;
-            //x = RADIUS * Math.Cos(beta) + _arrowEndX;
-            //y = RADIUS * Math.Sin(beta) + _arrowEndY;
-            //triangleSegment.Points.Add(new Point(x, y));
+            beta = Math.PI + alpha + THETA;
+            x = RADIUS * Math.Cos(beta) + _arrowEndPoint.X;
+            y = RADIUS * Math.Sin(beta) + _arrowEndPoint.Y;
+            triangleSegment.Points.Add(new Point(x, y));
             //triangleSegment.Points.Add(new Point(_arrowEndX, _arrowEndY));
 
             //triangleFigure.Segments.Add(triangleSegment);

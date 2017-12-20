@@ -1,3 +1,4 @@
+using SoLib.Algorithm.Matrix;
 using System;
 
 namespace SoLib.Algorithm.Sorter
@@ -35,6 +36,8 @@ namespace SoLib.Algorithm.Sorter
             if (startIndex < endIndex)
             {
                 Int32 dividerIndex = Partition(input, startIndex, endIndex);
+                QuickSort(input, startIndex, dividerIndex - 1);
+                QuickSort(input, dividerIndex + 1, endIndex);
             }
         }
 
@@ -42,19 +45,51 @@ namespace SoLib.Algorithm.Sorter
         {
             Int32 dividerIndex = startIndex - 1;
             Int32 pivot = input[endIndex];
+            Int32 temp;
 
-            for (Int32 i = startIndex; startIndex < endIndex; i++)
+            for (Int32 i = startIndex; i < endIndex; i++)
             {
                 if (input[i] <= pivot)
                 {
                     dividerIndex++;
-                    Int32 temp  = input[dividerIndex];
+                    temp = input[dividerIndex];
                     input[dividerIndex] = input[i];
-                    input[dividerIndex] = temp;
+                    input[i] = temp;
+                }
+            }
+            dividerIndex++;
+            temp = input[dividerIndex];
+            input[dividerIndex] = input[endIndex];
+            input[endIndex] = temp;
+
+            return dividerIndex;
+        }
+
+        public void MergeSort(Int32[] input)
+        {
+            Merge(input.SubArray(0, (Int32)Math.Floor((Double)input.Length / 2)), input.SubArray((Int32)Math.Floor((Double)input.Length / 2) + 1, input.Length - 1));
+        }
+
+        private Int32[] Merge(Int32[] input1, Int32[] input2)
+        {
+            Int32[] output = new Int32[input1.Length + input2.Length];
+            Int32 index1 = 0, index2 = 0;
+
+            for (int i = 0; i < output.Length; i++)
+            {
+                if (input1[index1] < input2[index2])
+                {
+                    output[i] = input1[index1];
+                    index1++;
+                }
+                else
+                {
+                    output[i] = input2[index2];
+                    index2++;
                 }
             }
 
-            return dividerIndex;
+            return output;
         }
     }
 }

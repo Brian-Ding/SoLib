@@ -24,10 +24,5 @@ namespace SoLib.Algorithm.Test
             };
             new EigenSolver(matrix).Solve();
         }
-
-        public void TestQuickSort()
-        {
-            
-        }
     }
 }
