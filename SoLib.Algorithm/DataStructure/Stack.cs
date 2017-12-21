@@ -30,7 +30,7 @@ namespace SoLib.Algorithm.DataStructure
 
         public T Take()
         {
-            Count--;
+            T item = _items[--Count];
 
             if (Count < _items.Length / 2)
             {
@@ -39,7 +39,7 @@ namespace SoLib.Algorithm.DataStructure
                 _items = temp;
             }
 
-            return _items[Count - 1];
+            return item;
         }
 
         private void Copy(T[] from, T[] to, Int32 startIndex, Int32 endIndex)

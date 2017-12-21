@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -14,12 +9,12 @@ namespace SoLib.Controls.ElementTree
     public sealed class Arrow : Path
     {
         private const Double THETA = 15 * Math.PI / 180;
-        private const Double RADIUS = 20;
+        private Double _radius = 40;
 
         private Int32 _deferLevel;
-        private Point _arrowStartPoint;
-        private Point _arrowEndPoint;
-        private Quadrant _quadrant;
+        private Point _endPoint;
+
+
 
         public Point EndPoint
         {
@@ -32,96 +27,77 @@ namespace SoLib.Controls.ElementTree
         private static void OnPointChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Arrow arrow = d as Arrow;
-            if (arrow.EndPoint.X >= 0 && arrow.EndPoint.Y >= 0)
-            {
-                arrow._quadrant = Quadrant.First;
-            }
-            else if (arrow.EndPoint.X < 0 && arrow.EndPoint.Y >= 0)
-            {
-                arrow._quadrant = Quadrant.Second;
-            }
-            else if (arrow.EndPoint.X < 0 && arrow.EndPoint.Y < 0)
-            {
-                arrow._quadrant = Quadrant.Third;
-            }
-            else
-            {
-                arrow._quadrant = Quadrant.Fourth;
-            }
-            arrow._arrowEndPoint = arrow.EndPoint;
+            arrow._radius = 0.05 * Math.Sqrt(arrow.EndPoint.X * arrow.EndPoint.X + arrow.EndPoint.Y * arrow.EndPoint.Y);
+            arrow._endPoint = new Point(Math.Abs(arrow.EndPoint.X), Math.Abs(arrow.EndPoint.Y));
             arrow.UpdateSize();
             arrow.UpdatePath();
-        }
-
-        public Arrow()
-        {
-            _arrowStartPoint = new Point(0, 0);
+            arrow.Transform();
         }
 
         private void UpdateSize()
         {
-            //this.Width = Math.Abs(Point.X);
-            //this.Height = Math.Abs(Point.Y);
+            this.Width = Math.Abs(EndPoint.X) + 30;
+            this.Height = Math.Abs(EndPoint.Y) + 30;
         }
 
         private void UpdatePath()
         {
             PathGeometry pathGeometry = new PathGeometry();
 
-            // Draw line
-            PathFigure lineFigure = new PathFigure() { IsClosed = false };
-            PolyLineSegment lineSegment = new PolyLineSegment();
-            
-            lineSegment.Points.Add(ToScreenPoint(_arrowStartPoint));
-            lineSegment.Points.Add(ToScreenPoint(_arrowEndPoint));
-            lineFigure.Segments.Add(lineSegment);
-            pathGeometry.Figures.Add(lineFigure);
+            //// Draw line
+            //PathFigure lineFigure = new PathFigure() { IsClosed = false };
+            //PolyLineSegment lineSegment = new PolyLineSegment();
+
+            //lineSegment.Points.Add(_endPoint);
+            //lineFigure.Segments.Add(lineSegment);
+            //pathGeometry.Figures.Add(lineFigure);
 
             // Draw triangle
+            Double away = 10;
+            Point arrowEnd = new Point(_endPoint.X + away, _endPoint.Y + away * _endPoint.Y / _endPoint.X);
             PathFigure triangleFigure = new PathFigure() { IsClosed = true };
             PolyLineSegment triangleSegment = new PolyLineSegment();
 
-            Double alpha = Math.Atan(_arrowEndPoint.Y / _arrowEndPoint.X);
-            triangleSegment.Points.Add(_arrowEndPoint);
+            Double alpha = Math.Atan(arrowEnd.Y / arrowEnd.X);
 
-            Double beta = Math.PI + alpha - THETA;
-            Double x = RADIUS * Math.Cos(beta) + _arrowEndPoint.X;
-            Double y = RADIUS * Math.Sin(beta) + _arrowEndPoint.Y;
-            triangleSegment.Points.Add(new Point(x, y));
+            Double beta1 = alpha - THETA;
+            Double x1 = arrowEnd.X - _radius * Math.Cos(beta1);
+            Double y1 = arrowEnd.Y - _radius * Math.Sin(beta1);
 
-            beta = Math.PI + alpha + THETA;
-            x = RADIUS * Math.Cos(beta) + _arrowEndPoint.X;
-            y = RADIUS * Math.Sin(beta) + _arrowEndPoint.Y;
-            triangleSegment.Points.Add(new Point(x, y));
-            //triangleSegment.Points.Add(new Point(_arrowEndX, _arrowEndY));
+            Double beta2 = alpha + THETA;
+            Double x2 = arrowEnd.X - _radius * Math.Cos(beta2);
+            Double y2 = arrowEnd.Y - _radius * Math.Sin(beta2);
 
-            //triangleFigure.Segments.Add(triangleSegment);
-            //pathGeometry.Figures.Add(triangleFigure);
+            triangleSegment.Points.Add(new Point((x1 + x2) / 2, (y1 + y2) / 2));
+            triangleSegment.Points.Add(new Point(x1, y1));
+            triangleSegment.Points.Add(arrowEnd);
+            triangleSegment.Points.Add(new Point(x2, y2));
+            triangleSegment.Points.Add(new Point((x1 + x2) / 2, (y1 + y2) / 2));
+
+
+            triangleFigure.Segments.Add(triangleSegment);
+            pathGeometry.Figures.Add(triangleFigure);
 
             //InvalidateArrange();
             Data = pathGeometry;
         }
 
-        private Point ToScreenPoint(Point point)
+        private void Transform()
         {
-            Point newPoint;
-            switch (_quadrant)
+            TransformGroup transformGroup = new TransformGroup();
+            if (EndPoint.X >= 0 && EndPoint.Y >= 0)
             {
-                case Quadrant.First:
-                    newPoint = new Point(point.X, EndPoint.Y - point.Y);
-                    break;
-                case Quadrant.Second:
-                    newPoint = new Point(point.X - EndPoint.X, EndPoint.Y - point.Y);
-                    break;
-                case Quadrant.Third:
-                    newPoint = new Point(point.X - EndPoint.X, -point.Y);
-                    break;
-                case Quadrant.Fourth:
-                    newPoint = new Point(point.X, -point.Y);
-                    break;
+                transformGroup.Children.Add(new ScaleTransform() { ScaleY = -1 });
             }
-
-            return newPoint;
+            else if (EndPoint.X < 0 && EndPoint.Y >= 0)
+            {
+                transformGroup.Children.Add(new RotateTransform() { Angle = 180 });
+            }
+            else if (EndPoint.X < 0 && EndPoint.Y < 0)
+            {
+                transformGroup.Children.Add(new ScaleTransform() { ScaleX = -1 });
+            }
+            this.RenderTransform = transformGroup;
         }
 
         //public IDisposable DeferRefresh()
@@ -142,14 +118,6 @@ namespace SoLib.Controls.ElementTree
         //        UpdatePath();
         //    }
         //}
-    }
-
-    internal enum Quadrant
-    {
-        First,
-        Second,
-        Third,
-        Fourth
     }
 
     //internal class DeferHelper : IDisposable

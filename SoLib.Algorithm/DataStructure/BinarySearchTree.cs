@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace SoLib.Algorithm.DataStructure
 {
-    public class BinarySearchTree
+    public class BinarySearchTree<T> : BinaryTree<T> where T : IEquatable<T>
     {
-        
+        public BinarySearchTree(BinaryTreeNode<T> root) : base(root) { }
+
+        public override void Add(BinaryTreeNode<T> node)
+        {
+            if (Root == null)
+            {
+                Root = node;
+            }
+        }
     }
 }

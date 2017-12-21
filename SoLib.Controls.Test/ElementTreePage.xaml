@@ -10,23 +10,5 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <tree:ElementTree Name="tree" />
-        <Grid Background="White">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <tree:Arrow Grid.Row="0" Grid.Column="0" Fill="Transparent" Stroke="Red" StrokeThickness="2" EndPoint="-20,100"
-                HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <tree:Arrow Grid.Row="0" Grid.Column="1" Fill="Transparent" Stroke="Red" StrokeThickness="2" EndPoint="20,100"
-                HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <tree:Arrow Grid.Row="1" Grid.Column="0" Fill="Transparent" Stroke="Red" StrokeThickness="2" EndPoint="-20,-100"
-                HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <tree:Arrow Grid.Row="1" Grid.Column="1" Fill="Transparent" Stroke="Red" StrokeThickness="2" EndPoint="20,-100"
-                HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Grid>
     </Grid>
 </Page>
