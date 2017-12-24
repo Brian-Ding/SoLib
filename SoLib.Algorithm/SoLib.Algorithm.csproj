@@ -6,4 +6,8 @@
     <RootNamespace>SoLib.Algorithm</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Graph\" />
+  </ItemGroup>
+
 </Project>

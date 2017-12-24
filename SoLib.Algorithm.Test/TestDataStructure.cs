@@ -29,5 +29,24 @@ namespace SoLib.Algorithm.Test
             integer = stack.Take();
             integer = stack.Take();
         }
+
+        [TestMethod]
+        public void TestReadGraph()
+        {
+            Int32[,] edges = new Int32[7, 2]
+            {
+                { 0, 1 },
+                { 0, 4 },
+                { 1, 2 },
+                { 1, 3 },
+                { 1, 4 },
+                { 2, 3 },
+                { 3, 4 }
+            };
+            Graph graph = new Graph(5, false);
+            graph.Read(edges);
+            graph.Print();
+            graph.FindPath(2, 3);
+        }
     }
 }
