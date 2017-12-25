@@ -31,7 +31,7 @@ namespace SoLib.Algorithm.Test
         }
 
         [TestMethod]
-        public void TestReadGraph()
+        public Graph TestReadGraph()
         {
             Int32[,] edges = new Int32[7, 2]
             {
@@ -46,7 +46,24 @@ namespace SoLib.Algorithm.Test
             Graph graph = new Graph(5, false);
             graph.Read(edges);
             graph.Print();
-            graph.FindPath(2, 3);
+            return graph;
+            graph.FindPathByBFS(2, 3);
         }
+
+        [TestMethod]
+        public void TestBFS()
+        {
+            Graph graph = TestReadGraph();
+            graph.FindPathByBFS(2, 3);
+        }
+
+        [TestMethod]
+        public void TestDFS()
+        {
+            Graph graph = TestReadGraph();
+            graph.FindPathByDFS(2, 3);
+        }
+
+
     }
 }

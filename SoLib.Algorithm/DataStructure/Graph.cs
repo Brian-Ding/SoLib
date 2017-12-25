@@ -73,8 +73,6 @@ namespace SoLib.Algorithm.DataStructure
             }
         }
 
-        #region Breadth-first Search
-
         private void InitializeSearch()
         {
             for (Int32 i = 0; i < VerticesCount; i++)
@@ -84,14 +82,29 @@ namespace SoLib.Algorithm.DataStructure
             }
         }
 
-        private void ProcessEdge(Int32 start, Int32 end)
+        private void PreProcess(Int32 vertex)
         {
 
         }
 
+        private void PostProcess(Int32 vertex)
+        {
+
+        }
+
+        private void ProcessEdge(Int32 start, Int32 end)
+        {
+            Debug.WriteLine($"Edge {start} - {end}");
+        }
+
+        #region Breath-first Search
+
+        /// <summary>
+        /// Breath-first search
+        /// </summary>
+        /// <param name="start"></param>
         private void BFS(Int32 start)
         {
-            InitializeSearch();
             _discovered[start] = true;
             Queue<Int32> queue = new Queue<int>();
             queue.Enqueue(start);
@@ -99,7 +112,9 @@ namespace SoLib.Algorithm.DataStructure
             while (queue.Count > 0)
             {
                 Int32 vertex = queue.Dequeue();
+                PreProcess(vertex);
                 Edge edge = this.Edges[vertex];
+
                 while (edge != null)
                 {
                     if (!_discovered[edge.Y])
@@ -108,7 +123,8 @@ namespace SoLib.Algorithm.DataStructure
                         _parent[edge.Y] = vertex;
                         queue.Enqueue(edge.Y);
                     }
-                    else if (!_processed[edge.Y])
+
+                    if (!_processed[edge.Y])
                     {
                         ProcessEdge(vertex, edge.Y);
                     }
@@ -116,6 +132,7 @@ namespace SoLib.Algorithm.DataStructure
                     edge = edge.Next;
                 }
                 _processed[vertex] = true;
+                PostProcess(vertex);
             }
         }
 
@@ -132,13 +149,54 @@ namespace SoLib.Algorithm.DataStructure
             }
         }
 
-        public void FindPath(Int32 start, Int32 end)
+        public void FindPathByBFS(Int32 start, Int32 end)
         {
+            InitializeSearch();
             BFS(start);
             Debug.WriteLine("");
             Find(start, end);
             Debug.WriteLine("");
         }
+
+        #endregion
+
+        #region Depth-first Search
+
+        private void DFS(Int32 vertex)
+        {
+            _discovered[vertex] = true;
+            PreProcess(vertex);
+            Edge edge = Edges[vertex];
+            while (edge != null)
+            {
+                if (!_discovered[edge.Y])
+                {
+                    _parent[edge.Y] = vertex;
+                    ProcessEdge(vertex, edge.Y);
+                    DFS(edge.Y);
+                }
+                else if (!_processed[edge.Y] || this.Directed)
+                {
+                    ProcessEdge(vertex, edge.Y);
+                }
+
+                edge = edge.Next;
+            }
+
+            _processed[vertex] = true;
+            PostProcess(vertex);
+        }
+
+        public void FindPathByDFS(Int32 start, Int32 end)
+        {
+            InitializeSearch();
+            DFS(start);
+            Debug.WriteLine("");
+            Find(start, end);
+            Debug.WriteLine("");
+
+        }
+
 
         #endregion
     }
