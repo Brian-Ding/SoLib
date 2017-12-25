@@ -63,7 +63,7 @@ namespace SoLib.Controls.ElementTree
             for (int i = 0; i < childCount; i++)
             {
                 Element childElement = element.Children[i];
-                height = Math.Max(height, SetTop(childElement, top + element.Height + 10));
+                height = Math.Max(height, SetTop(childElement, top + element.Height + 100));
             }
 
             return height;
