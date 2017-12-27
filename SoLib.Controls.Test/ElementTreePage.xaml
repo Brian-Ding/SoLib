@@ -10,5 +10,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <tree:ElementTree Name="tree" />
+        <Grid Background="White">
+            <tree:Arrow EndPoint="-25,-100" StrokeThickness="1" Stroke="Red" Fill="Red"/>
+        </Grid>
     </Grid>
 </Page>
