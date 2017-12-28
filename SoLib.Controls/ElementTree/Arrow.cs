@@ -27,7 +27,7 @@ namespace SoLib.Controls.ElementTree
         private static void OnPointChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Arrow arrow = d as Arrow;
-            //arrow._radius = 0.05 * Math.Sqrt(arrow.EndPoint.X * arrow.EndPoint.X + arrow.EndPoint.Y * arrow.EndPoint.Y);
+            arrow._radius = 0.05 * Math.Sqrt(arrow.EndPoint.X * arrow.EndPoint.X + arrow.EndPoint.Y * arrow.EndPoint.Y);
             arrow._endPoint = new Point(Math.Abs(arrow.EndPoint.X), Math.Abs(arrow.EndPoint.Y));
             arrow.UpdateSize();
             arrow.UpdatePath();
@@ -43,37 +43,24 @@ namespace SoLib.Controls.ElementTree
         private void UpdatePath()
         {
             PathGeometry pathGeometry = new PathGeometry();
-
-            //// Draw line
-            //PathFigure lineFigure = new PathFigure() { IsClosed = false };
-            //PolyLineSegment lineSegment = new PolyLineSegment();
-
-            //lineSegment.Points.Add(_endPoint);
-            //lineFigure.Segments.Add(lineSegment);
-            //pathGeometry.Figures.Add(lineFigure);
-
-            // Draw triangle
-            Double away = 10;
-            Point arrowEnd = new Point(_endPoint.X + away, _endPoint.Y + away * _endPoint.Y / _endPoint.X);
             PathFigure triangleFigure = new PathFigure() { IsClosed = true };
             PolyLineSegment triangleSegment = new PolyLineSegment();
 
-            Double alpha = Math.Atan(arrowEnd.Y / arrowEnd.X);
+            Double alpha = Math.Atan(_endPoint.Y / _endPoint.X);
 
             Double beta1 = alpha - THETA;
-            Double x1 = arrowEnd.X - _radius * Math.Cos(beta1);
-            Double y1 = arrowEnd.Y - _radius * Math.Sin(beta1);
+            Double x1 = _endPoint.X - _radius * Math.Cos(beta1);
+            Double y1 = _endPoint.Y - _radius * Math.Sin(beta1);
 
             Double beta2 = alpha + THETA;
-            Double x2 = arrowEnd.X - _radius * Math.Cos(beta2);
-            Double y2 = arrowEnd.Y - _radius * Math.Sin(beta2);
+            Double x2 = _endPoint.X - _radius * Math.Cos(beta2);
+            Double y2 = _endPoint.Y - _radius * Math.Sin(beta2);
 
             triangleSegment.Points.Add(new Point((x1 + x2) / 2, (y1 + y2) / 2));
             triangleSegment.Points.Add(new Point(x1, y1));
-            triangleSegment.Points.Add(arrowEnd);
+            triangleSegment.Points.Add(_endPoint);
             triangleSegment.Points.Add(new Point(x2, y2));
             triangleSegment.Points.Add(new Point((x1 + x2) / 2, (y1 + y2) / 2));
-
 
             triangleFigure.Segments.Add(triangleSegment);
             pathGeometry.Figures.Add(triangleFigure);

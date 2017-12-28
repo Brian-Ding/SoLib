@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace SoLib.Controls.ElementTree
 {
@@ -21,7 +19,6 @@ namespace SoLib.Controls.ElementTree
                 Height = _content.Height;
             }
         }
-        public FrameworkElement Description { get; set; }
         public IList<Element> Children { get; set; }
 
         internal Double Width { get; set; }
@@ -29,12 +26,20 @@ namespace SoLib.Controls.ElementTree
         internal Double Left { get; set; }
         internal Double Top { get; set; }
 
-        public Element(Guid id, FrameworkElement content, FrameworkElement description, IList<Element> children)
+        public Element(Guid id, FrameworkElement content, Object tooltip)
         {
             ID = id;
             Content = content;
-            Description = description;
-            Children = children == null ? new List<Element>() : children;
+            ToolTipService.SetToolTip(Content, tooltip);
+            Children = new List<Element>();
+        }
+
+        public Element(Guid id, FrameworkElement content, Object tooltip, IList<Element> children)
+        {
+            ID = id;
+            Content = content;
+            ToolTipService.SetToolTip(Content, tooltip);
+            Children = children;
         }
     }
 }

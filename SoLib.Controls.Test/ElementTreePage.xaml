@@ -9,9 +9,9 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <tree:ElementTree Name="tree" />
-        <Grid Background="White">
+        <tree:ElementTree Name="tree" Stroke="Red" ArrowThickness="1" Margin="50" Distance="50" />
+        <!--<Grid Background="White">
             <tree:Arrow EndPoint="-25,-100" StrokeThickness="1" Stroke="Red" Fill="Red"/>
-        </Grid>
+        </Grid>-->
     </Grid>
 </Page>
