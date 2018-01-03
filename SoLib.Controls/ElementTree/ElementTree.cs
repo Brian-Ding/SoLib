@@ -9,7 +9,55 @@ namespace SoLib.Controls.ElementTree
 {
     public sealed class ElementTree : Canvas
     {
-        private const Double MARGIN = 5;
+        private const Double VERTICALMARGIN = 10;
+
+        public Color Stroke
+        {
+            get { return (Color)GetValue(StrokeProperty); }
+            set { SetValue(StrokeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Stroke.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty StrokeProperty =
+            DependencyProperty.Register(nameof(Stroke), typeof(Color), typeof(ElementTree), new PropertyMetadata(Colors.Black));
+
+
+
+        public Double ArrowThickness
+        {
+            get { return (Double)GetValue(ArrowThicknessProperty); }
+            set { SetValue(ArrowThicknessProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ArrowThickness.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty ArrowThicknessProperty =
+            DependencyProperty.Register(nameof(ArrowThickness), typeof(Double), typeof(ElementTree), new PropertyMetadata(2.0));
+
+
+
+        public Double Distance
+        {
+            get { return (Double)GetValue(DistanceProperty); }
+            set { SetValue(DistanceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Distance.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty DistanceProperty =
+            DependencyProperty.Register(nameof(Distance), typeof(Double), typeof(ElementTree), new PropertyMetadata(100.0));
+
+
+
+        public Double Margin
+        {
+            get { return (Double)GetValue(MarginProperty); }
+            set { SetValue(MarginProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Margin.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty MarginProperty =
+            DependencyProperty.Register(nameof(Margin), typeof(Double), typeof(ElementTree), new PropertyMetadata(10.0));
+
+
 
         public Element RootElement
         {
@@ -29,27 +77,26 @@ namespace SoLib.Controls.ElementTree
             elementTree.Height = elementTree.SetTop(elementTree.RootElement);
             elementTree.Draw(elementTree.RootElement);
             elementTree.DrawArrow(elementTree.RootElement);
-            elementTree.Background = new SolidColorBrush(Colors.Azure);
         }
 
-        private Double SetLeft(Element element, Double leftMargin = 0)
+        private Double SetLeft(Element element, Double initialLeft = 0)
         {
             Double childWidth = 0;
             Int32 childCount = element.Children.Count;
 
             for (int i = 0; i < childCount; i++)
             {
-                childWidth += SetLeft(element.Children[i], childWidth + leftMargin);
+                childWidth += SetLeft(element.Children[i], childWidth + initialLeft);
             }
 
             if (childWidth < element.Width)
             {
-                element.Left = leftMargin + MARGIN;
-                return element.Width + MARGIN;
+                element.Left = initialLeft + Margin;
+                return element.Width + Margin;
             }
             else
             {
-                element.Left = leftMargin + (childWidth - element.Width) / 2;
+                element.Left = initialLeft + (childWidth - element.Width) / 2;
                 return childWidth;
             }
         }
@@ -63,7 +110,7 @@ namespace SoLib.Controls.ElementTree
             for (int i = 0; i < childCount; i++)
             {
                 Element childElement = element.Children[i];
-                height = Math.Max(height, SetTop(childElement, top + element.Height + 100));
+                height = Math.Max(height, SetTop(childElement, top + element.Height + 2 * VERTICALMARGIN + Distance));
             }
 
             return height;
@@ -86,17 +133,18 @@ namespace SoLib.Controls.ElementTree
             {
                 Arrow arrow = new Arrow()
                 {
-                    Stroke = new SolidColorBrush(Colors.Red),
-                    Fill = new SolidColorBrush(Colors.Red),
-                    StrokeThickness = 1
-                };
-                arrow.EndPoint = new Point()
-                {
-                    X = element.Children[i].Left + element.Children[i].Width / 2 - element.Left - element.Width / 2,
-                    Y = element.Top + element.Height - element.Children[i].Top
+                    Stroke = new SolidColorBrush(Stroke),
+                    Fill = new SolidColorBrush(Stroke),
+                    StrokeThickness = ArrowThickness,
+                    EndPoint = new Point()
+                    {
+                        X = element.Children[i].Left + element.Children[i].Width / 2 - element.Left - element.Width / 2,
+                        //Y = element.Top + element.Height + 2 * Margin - element.Children[i].Top
+                        Y = -Distance
+                    }
                 };
                 SetLeft(arrow, element.Left + element.Width / 2);
-                SetTop(arrow, element.Top + element.Height);
+                SetTop(arrow, element.Top + element.Height + VERTICALMARGIN);
                 Children.Add(arrow);
 
                 DrawArrow(element.Children[i]);
