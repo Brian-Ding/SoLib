@@ -27,7 +27,7 @@ namespace SoLib.Controls.ElementTree
         private static void OnPointChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Arrow arrow = d as Arrow;
-            arrow._radius = 0.05 * Math.Sqrt(arrow.EndPoint.X * arrow.EndPoint.X + arrow.EndPoint.Y * arrow.EndPoint.Y);
+            //arrow._radius = 0.05 * Math.Sqrt(arrow.EndPoint.X * arrow.EndPoint.X + arrow.EndPoint.Y * arrow.EndPoint.Y);
             arrow._endPoint = new Point(Math.Abs(arrow.EndPoint.X), Math.Abs(arrow.EndPoint.Y));
             arrow.UpdateSize();
             arrow.UpdatePath();

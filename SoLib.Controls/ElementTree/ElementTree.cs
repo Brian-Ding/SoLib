@@ -23,6 +23,18 @@ namespace SoLib.Controls.ElementTree
 
 
 
+        public Color Fill
+        {
+            get { return (Color)GetValue(FillProperty); }
+            set { SetValue(FillProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Fill.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty FillProperty =
+            DependencyProperty.Register(nameof(Fill), typeof(Color), typeof(ElementTree), new PropertyMetadata(Colors.Transparent));
+
+
+
         public Double ArrowThickness
         {
             get { return (Double)GetValue(ArrowThicknessProperty); }
@@ -134,7 +146,7 @@ namespace SoLib.Controls.ElementTree
                 Arrow arrow = new Arrow()
                 {
                     Stroke = new SolidColorBrush(Stroke),
-                    Fill = new SolidColorBrush(Stroke),
+                    Fill = new SolidColorBrush(Fill),
                     StrokeThickness = ArrowThickness,
                     EndPoint = new Point()
                     {

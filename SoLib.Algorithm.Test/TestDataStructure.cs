@@ -43,11 +43,9 @@ namespace SoLib.Algorithm.Test
                 { 2, 3 },
                 { 3, 4 }
             };
-            Graph graph = new Graph(5, false);
-            graph.Read(edges);
+            Graph graph = new Graph(5, edges, false);
             graph.Print();
             return graph;
-            graph.FindPathByBFS(2, 3);
         }
 
         [TestMethod]
@@ -64,6 +62,18 @@ namespace SoLib.Algorithm.Test
             graph.FindPathByDFS(2, 3);
         }
 
+        [TestMethod]
+        public void TestSubsetBackTracker()
+        {
+            SubsetsBackTracker subsetsBackTracker = new SubsetsBackTracker();
+            subsetsBackTracker.BackTrack(new Int32[3], -1, 3);
+        }
 
+        [TestMethod]
+        public void TestPermutationBackTracker()
+        {
+            PermutationBackTracker permutationBackTracker = new PermutationBackTracker();
+            permutationBackTracker.BackTrack(new Int32[3], 0, 3);
+        }
     }
 }

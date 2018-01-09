@@ -19,7 +19,7 @@ namespace SoLib.Algorithm.DataStructure
         public Int32 EdgesCount { get; set; }
         public Boolean Directed { get; set; }
 
-        public Graph(Int32 verticesCount, Boolean directed)
+        public Graph(Int32 verticesCount, Int32[,] edges, Boolean directed)
         {
             VerticesCount = verticesCount;
             EdgesCount = 0;
@@ -30,9 +30,11 @@ namespace SoLib.Algorithm.DataStructure
             _discovered = new Boolean[verticesCount];
             _processed = new Boolean[verticesCount];
             _parent = new Int32[verticesCount];
+
+            Read(edges);
         }
 
-        public void InsertEdge(Int32 x, Int32 y, Boolean directed)
+        private void InsertEdge(Int32 x, Int32 y, Boolean directed)
         {
             Edge edge = new Edge();
             edge.Weight = 0;
@@ -50,7 +52,7 @@ namespace SoLib.Algorithm.DataStructure
             }
         }
 
-        public void Read(Int32[,] edges)
+        private void Read(Int32[,] edges)
         {
             for (Int32 i = 0; i < edges.GetLength(0); i++)
             {
@@ -197,6 +199,62 @@ namespace SoLib.Algorithm.DataStructure
 
         }
 
+
+        #endregion
+
+        #region Minimum Spanning Tree
+
+        public void Prim(Int32 start = 0)
+        {
+            Boolean[] inTree = new Boolean[VerticesCount];
+            for (Int32 i = 0; i < VerticesCount; i++)
+            {
+                inTree[i] = false;
+            }
+
+            Double[] distance = new Double[VerticesCount];
+            for (Int32 i = 0; i < VerticesCount; i++)
+            {
+                distance[i] = Double.MaxValue;
+            }
+
+            for (Int32 i = 0; i < VerticesCount; i++)
+            {
+                _parent[i] = -1;
+            }
+
+            Int32 currentVertex = start;
+            distance[currentVertex] = 0;
+            while (!inTree[currentVertex])
+            {
+                inTree[currentVertex] = true;
+                Edge edge = Edges[currentVertex];
+                while (edge != null)
+                {
+                    Int32 neighbor = edge.Y;
+                    Double weight = edge.Weight;
+                    if (distance[neighbor] > weight && !inTree[neighbor])
+                    {
+                        distance[neighbor] = weight;
+                        _parent[neighbor] = currentVertex;
+                    }
+                    edge = edge.Next;
+                }
+
+                Double minWeight = Double.MaxValue;
+                Int32 minVertex = -1;
+                for (Int32 i = 0; i < VerticesCount; i++)
+                {
+                    if (!inTree[i] && distance[i] < minWeight)
+                    {
+                        minWeight = distance[i];
+                        minVertex = i;
+                    }
+                }
+
+                currentVertex = minVertex;
+            }
+        }
 
         #endregion
     }
